@@ -1,4 +1,9 @@
-# 3. Functions, files, OOP
+---
+lesson: true
+category: "Python · Session 3 of 3"
+---
+
+# Functions, files, OOP
 
 <p class="session-meta">60 minutes · Functions, arguments, scope, files, try/except, classes, the four OOP pillars</p>
 

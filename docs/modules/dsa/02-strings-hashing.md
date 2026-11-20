@@ -1,4 +1,9 @@
-# 2. Strings and hashing
+---
+lesson: true
+category: "Data Structures and Algorithms · Session 2 of 7"
+---
+
+# Strings and hashing
 
 <p class="session-meta">60 minutes · Immutable strings, dictionaries and sets as hash maps, frequency counting</p>
 

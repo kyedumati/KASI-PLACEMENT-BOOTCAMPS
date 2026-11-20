@@ -1,3 +1,8 @@
+---
+lesson: true
+category: "Developer Tools · Day 1"
+---
+
 # Linux and Git
 
 <p class="session-meta">60 minutes · Shell commands, pipes, permissions, git init to push, writing a README</p>

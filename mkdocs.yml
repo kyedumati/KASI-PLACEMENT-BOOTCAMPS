@@ -8,40 +8,55 @@ copyright: Copyright &copy; 2026 Kasi Yedumati
 
 theme:
   name: material
+  custom_dir: overrides
   language: en
-  font: false # system fonts, so the site works without internet in a classroom
+  font:
+    text: Inter
+    code: JetBrains Mono
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: deep orange
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: deep orange
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
+  icon:
+    logo: material/school
   features:
     - navigation.tabs
-    - navigation.sections
+    - navigation.tabs.sticky
+    - navigation.path
+    - navigation.indexes
     - navigation.top
     - navigation.footer
-    - navigation.indexes
-    - toc.follow
+    - navigation.instant
+    - navigation.tracking
     - search.suggest
     - search.highlight
     - content.code.copy
     - content.tabs.link
+    - toc.follow
+    - toc.integrate
 
 extra_css:
   - stylesheets/extra.css
 
+extra_javascript:
+  - javascripts/site.js
+
 plugins:
   - search
+  # Downloads the web fonts at build time and serves them from this site,
+  # so pages make no requests to other servers and work without internet.
+  - privacy
   # OFFLINE=true mkdocs build  -> site/ opens straight from a pen drive, no server needed
   - offline:
       enabled: !ENV [OFFLINE, false]
@@ -53,12 +68,18 @@ markdown_extensions:
   - tables
   - toc:
       permalink: true
+      toc_depth: 3
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.highlight:
       anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.keys
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.tasklist:

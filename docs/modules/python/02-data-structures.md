@@ -1,4 +1,9 @@
-# 2. Python data structures
+---
+lesson: true
+category: "Python · Session 2 of 3"
+---
+
+# Python data structures
 
 <p class="session-meta">60 minutes · Lists, tuples, sets, dictionaries, slicing, comprehensions, string methods</p>
 

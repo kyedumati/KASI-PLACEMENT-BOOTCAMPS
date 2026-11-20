@@ -1,4 +1,9 @@
-# 4. Sorting and binary search
+---
+lesson: true
+category: "Data Structures and Algorithms · Session 4 of 7"
+---
+
+# Sorting and binary search
 
 <p class="session-meta">60 minutes · Bubble, selection and merge sort (dry run), Python sort with key, binary search template, search on the answer</p>
 

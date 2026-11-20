@@ -1,8 +1,13 @@
 # M.Tech Placement Readiness Training
 
-<p class="session-meta">25 hours · 5 days · 5 one-hour sessions a day</p>
+A one-week, hands-on programme for second-year M.Tech students. This site covers the **Python, Linux and Git, and DSA** part: Day 1, Day 2 and the morning of Day 3. Sessions with a link have material here.
 
-This site covers the **Python, Linux and Git, and DSA** part of the programme: Day 1, Day 2 and the morning of Day 3. Sessions with a link have material here.
+<div class="ksr-facts" markdown>
+<div><strong>25</strong><span>Hours in total</span></div>
+<div><strong>5</strong><span>Days, five sessions a day</span></div>
+<div><strong>11</strong><span>Hours of Python, Git and DSA</span></div>
+<div><strong>60%</strong><span>Score needed for the certificate</span></div>
+</div>
 
 ## Week at a glance
 

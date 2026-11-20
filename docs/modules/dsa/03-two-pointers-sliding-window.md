@@ -1,4 +1,9 @@
-# 3. Two pointers and sliding window
+---
+lesson: true
+category: "Data Structures and Algorithms · Session 3 of 7"
+---
+
+# Two pointers and sliding window
 
 <p class="session-meta">60 minutes · Opposite-end pointers, fast and slow pointers, fixed and variable windows</p>
 

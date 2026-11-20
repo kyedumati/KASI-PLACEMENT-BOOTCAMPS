@@ -1,4 +1,9 @@
-# 6. Recursion, backtracking, trees
+---
+lesson: true
+category: "Data Structures and Algorithms · Session 6 of 7"
+---
+
+# Recursion, backtracking, trees
 
 <p class="session-meta">60 minutes · Base and recursive case, call-stack tracing, generating subsets, tree traversals, level order, BST search</p>
 

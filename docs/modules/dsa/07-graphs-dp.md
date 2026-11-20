@@ -1,4 +1,9 @@
-# 7. Graphs (BFS, DFS) and an introduction to DP
+---
+lesson: true
+category: "Data Structures and Algorithms · Session 7 of 7"
+---
+
+# Graphs (BFS, DFS) and an introduction to DP
 
 <p class="session-meta">60 minutes · Adjacency list, BFS and DFS templates, grid as a graph, DP as recursion plus memory</p>
 

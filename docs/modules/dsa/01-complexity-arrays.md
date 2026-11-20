@@ -1,4 +1,9 @@
-# 1. Complexity and arrays
+---
+lesson: true
+category: "Data Structures and Algorithms · Session 1 of 7"
+---
+
+# Complexity and arrays
 
 <p class="session-meta">60 minutes · Big-O by counting loops, time versus space, traversal, prefix sums, Kadane's algorithm</p>
 

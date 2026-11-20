@@ -1,4 +1,9 @@
-# 1. Python basics
+---
+lesson: true
+category: "Python · Session 1 of 3"
+---
+
+# Python basics
 
 <p class="session-meta">60 minutes · Variables, data types, input/output, operators, conditions, loops</p>
 

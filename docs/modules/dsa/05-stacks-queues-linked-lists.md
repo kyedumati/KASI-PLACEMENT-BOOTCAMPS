@@ -1,4 +1,9 @@
-# 5. Stacks, queues, linked lists
+---
+lesson: true
+category: "Data Structures and Algorithms · Session 5 of 7"
+---
+
+# Stacks, queues, linked lists
 
 <p class="session-meta">60 minutes · Stack and queue with list and deque, singly linked list built from a Node class</p>
 
