@@ -12,7 +12,7 @@
 | 11:45 to 12:45 | [Python data structures](../../modules/python/02-data-structures.md) | Character frequency, remove duplicates, second largest, palindrome string, word count |
 | 12:45 to 1:45 | Lunch | |
 | 1:45 to 2:45 | [Functions, files, OOP](../../modules/python/03-functions-files-oop.md) | Student-record program |
-| 2:45 to 3:45 | Linux and Git | Create `placement-training-2026` and push the Day 1 programs |
+| 2:45 to 3:45 | [Linux and Git](../../modules/tools/linux-git.md) | Create `placement-training-2026` and push the Day 1 programs |
 
 !!! note "The diagnostic is not graded"
     It records where you start, so that Day 5 can show how far you moved. Attempt everything honestly and do not look anything up.

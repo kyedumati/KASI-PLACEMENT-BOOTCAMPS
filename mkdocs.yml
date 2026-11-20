@@ -79,6 +79,7 @@ nav:
       - 1. Python basics: modules/python/01-basics.md
       - 2. Python data structures: modules/python/02-data-structures.md
       - 3. Functions, files, OOP: modules/python/03-functions-files-oop.md
+  - Linux and Git: modules/tools/linux-git.md
   - DSA:
       - modules/dsa/index.md
       - Pattern cheat sheet: modules/dsa/pattern-cheatsheet.md

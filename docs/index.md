@@ -10,7 +10,7 @@ Short, hands-on programmes that get students ready for placement coding rounds a
 
     ---
 
-    Python, data structures and algorithms, taught by pattern.
+    Python, Linux and Git, and data structures and algorithms taught by pattern.
 
     [Open the schedule](bootcamps/mtech-placement-25h/index.md)
 
@@ -21,6 +21,7 @@ Short, hands-on programmes that get students ready for placement coding rounds a
 | Module | Sessions | Start here |
 |---|---|---|
 | Python | 3 | [Python basics](modules/python/01-basics.md) |
+| Linux and Git | 1 | [Linux and Git](modules/tools/linux-git.md) |
 | Data structures and algorithms | 7 | [Complexity and arrays](modules/dsa/01-complexity-arrays.md) |
 
 New to the site? Read [How to use](how-to-use.md) first. It takes two minutes.

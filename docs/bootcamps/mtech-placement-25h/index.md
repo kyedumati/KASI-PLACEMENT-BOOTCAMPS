@@ -2,13 +2,13 @@
 
 <p class="session-meta">25 hours · 5 days · 5 one-hour sessions a day</p>
 
-This site covers the **Python and DSA** part of the programme: Day 1, Day 2 and the morning of Day 3. Sessions with a link have material here.
+This site covers the **Python, Linux and Git, and DSA** part of the programme: Day 1, Day 2 and the morning of Day 3. Sessions with a link have material here.
 
 ## Week at a glance
 
 | Day | 9:30 to 10:30 | 10:30 to 11:30 | 11:45 to 12:45 | 1:45 to 2:45 | 2:45 to 3:45 |
 |---|---|---|---|---|---|
-| [**Day 1**](day-1.md) Programming foundations | Diagnostic test and setup | [Python basics](../../modules/python/01-basics.md) | [Python data structures](../../modules/python/02-data-structures.md) | [Functions, files, OOP](../../modules/python/03-functions-files-oop.md) | Linux and Git |
+| [**Day 1**](day-1.md) Programming foundations | Diagnostic test and setup | [Python basics](../../modules/python/01-basics.md) | [Python data structures](../../modules/python/02-data-structures.md) | [Functions, files, OOP](../../modules/python/03-functions-files-oop.md) | [Linux and Git](../../modules/tools/linux-git.md) |
 | [**Day 2**](day-2.md) DSA I | [Complexity and arrays](../../modules/dsa/01-complexity-arrays.md) | [Strings and hashing](../../modules/dsa/02-strings-hashing.md) | [Two pointers and sliding window](../../modules/dsa/03-two-pointers-sliding-window.md) | [Sorting and binary search](../../modules/dsa/04-sorting-binary-search.md) | [Stacks, queues, linked lists](../../modules/dsa/05-stacks-queues-linked-lists.md) |
 | [**Day 3**](day-3.md) DSA II and data | [Recursion, backtracking, trees](../../modules/dsa/06-recursion-backtracking-trees.md) | [Graphs (BFS, DFS) and DP intro](../../modules/dsa/07-graphs-dp.md) | DBMS concepts and SQL basics | Joins, subqueries, window functions | NumPy and pandas |
 | **Day 4** CS core and AI models | OS and computer networks | Deep learning and PyTorch | CNN and Transformers | LLMs and embeddings | RAG and AI agents |
@@ -16,11 +16,12 @@ This site covers the **Python and DSA** part of the programme: Day 1, Day 2 and 
 
 Breaks: 11:30 to 11:45, and lunch from 12:45 to 1:45.
 
-## Hours for Python and DSA
+## Hours covered on this site
 
 | Module | Hours | When |
 |---|---|---|
 | Python programming, including OOP | 3 | Day 1 |
+| Linux and Git | 1 | Day 1 |
 | Data structures and algorithms | 7 | Day 2 and Day 3 morning |
 
 ## How you are scored
