@@ -1,0 +1,15 @@
+/* Larger code for projector use */
+.md-typeset pre > code {
+  font-size: 0.8rem;
+}
+
+/* Session facts line under each page title */
+.md-typeset .session-meta {
+  color: var(--md-default-fg-color--light);
+  font-size: 0.8rem;
+  margin-top: -0.6rem;
+}
+
+.md-typeset table:not([class]) th {
+  white-space: nowrap;
+}

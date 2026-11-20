@@ -1,0 +1,91 @@
+site_name: Kasi Yedumati · Placement Bootcamps
+site_description: Session-by-session material for placement readiness bootcamps and crash courses.
+site_author: Kasi Yedumati
+site_url: https://kyedumati.github.io/KASI-PLACEMENT-BOOTCAMPS/
+repo_url: https://github.com/kyedumati/KASI-PLACEMENT-BOOTCAMPS
+repo_name: KASI-PLACEMENT-BOOTCAMPS
+copyright: Copyright &copy; 2026 Kasi Yedumati
+
+theme:
+  name: material
+  language: en
+  font: false # system fonts, so the site works without internet in a classroom
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - search
+  # OFFLINE=true mkdocs build  -> site/ opens straight from a pen drive, no server needed
+  - offline:
+      enabled: !ENV [OFFLINE, false]
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+nav:
+  - Home: index.md
+  - How to use: how-to-use.md
+  - Bootcamps:
+      - M.Tech Placement Readiness (25 h):
+          - bootcamps/mtech-placement-25h/index.md
+          - Before Day 1 (setup): bootcamps/mtech-placement-25h/setup.md
+          - Day 1 · Programming foundations: bootcamps/mtech-placement-25h/day-1.md
+          - Day 2 · DSA I: bootcamps/mtech-placement-25h/day-2.md
+          - Day 3 · DSA II: bootcamps/mtech-placement-25h/day-3.md
+  - Python:
+      - modules/python/index.md
+      - 1. Python basics: modules/python/01-basics.md
+      - 2. Python data structures: modules/python/02-data-structures.md
+      - 3. Functions, files, OOP: modules/python/03-functions-files-oop.md
+  - DSA:
+      - modules/dsa/index.md
+      - Pattern cheat sheet: modules/dsa/pattern-cheatsheet.md
+      - 1. Complexity and arrays: modules/dsa/01-complexity-arrays.md
+      - 2. Strings and hashing: modules/dsa/02-strings-hashing.md
+      - 3. Two pointers and sliding window: modules/dsa/03-two-pointers-sliding-window.md
+      - 4. Sorting and binary search: modules/dsa/04-sorting-binary-search.md
+      - 5. Stacks, queues, linked lists: modules/dsa/05-stacks-queues-linked-lists.md
+      - 6. Recursion, backtracking, trees: modules/dsa/06-recursion-backtracking-trees.md
+      - 7. Graphs and DP intro: modules/dsa/07-graphs-dp.md
