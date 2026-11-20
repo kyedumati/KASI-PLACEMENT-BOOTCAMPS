@@ -44,3 +44,23 @@ Write a new module page only when the new bootcamp needs a session that does not
 ## Not in this repo
 
 Diagnostic tests, post-assessments and quiz answer keys stay out of this public site.
+
+## Slide decks
+
+`slides/dist/` holds one PowerPoint deck per day. They carry the diagrams and step-by-step walkthroughs; code is typed live, and problem statements stay on the site.
+
+| Deck | Slides | Covers |
+|---|---|---|
+| `Day-1-Programming-Foundations.pptx` | 64 | Opening, Python (3 sessions), Linux and Git |
+| `Day-2-DSA-I.pptx` | 125 | Five DSA sessions |
+| `Day-3-DSA-II.pptx` | 69 | Two DSA sessions (morning) |
+
+The decks are generated, so edit the scripts and rebuild instead of editing the `.pptx` by hand:
+
+```bash
+cd slides && npm install && node build.js
+```
+
+`node build.js 2` rebuilds one day. `slides/lib.js` holds the shared design and diagram helpers, and `day1.js`, `day2.js`, `day3.js` hold the content. Walkthrough slides are produced by running the algorithm in the script, so the values on each step are computed, not typed.
+
+`slides/qa.sh 2` (macOS with Keynote) exports a deck to PDF and builds contact sheets in `slides/qa/` for a visual check.
