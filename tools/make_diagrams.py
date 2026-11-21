@@ -337,7 +337,147 @@ def binary_search(theme):
     return s
 
 
+def array_index(theme):
+    s = Svg(900, 240, theme)
+    prices = [40, 10, 30]
+    x0, cw = 285, 110
+    s.text(450, 36, "prices = [40, 10, 30]", size=17, weight=700, mono=True)
+    s.text(264, 113, "value", size=14, fill="muted", anchor="end")
+    s.text(264, 171, "index", size=14, fill="muted", anchor="end")
+    for i, val in enumerate(prices):
+        x = x0 + i * cw
+        s.rect(x, 64, cw - 8, 76, fill="blue_soft", stroke="blue", sw=2)
+        s.text(x + (cw - 8) / 2, 113, str(val), size=26, weight=700, mono=True)
+        s.text(x + (cw - 8) / 2, 171, str(i), size=18, weight=700, mono=True, fill="blue")
+    s.text(450, 216, "Indexes start at 0, so the last index is len(prices) - 1, which is 2.", size=14, fill="muted")
+    return s
+
+
+def prefix_sum(theme):
+    s = Svg(900, 330, theme)
+    nums, prefix = [2, 4, 1, 7, 3], [0, 2, 6, 7, 14, 17]
+    x0, cw, bw = 250, 90, 82
+    s.text(232, 91, "nums", size=15, weight=700, mono=True, anchor="end")
+    s.text(232, 203, "prefix", size=15, weight=700, mono=True, anchor="end")
+    for i, val in enumerate(nums):
+        x = x0 + cw / 2 + i * cw
+        inside = 1 <= i <= 3
+        s.text(x + bw / 2, 46, str(i), size=12, fill="muted", mono=True)
+        s.rect(x, 58, bw, 52, fill="green_soft" if inside else "card", stroke="green" if inside else "line", sw=2 if inside else 1.5)
+        s.text(x + bw / 2, 91, str(val), size=20, weight=700, mono=True)
+    s.text(x0 + cw / 2 + 2 * cw + bw / 2, 136, "4 + 1 + 7 = 12", size=15, weight=700, mono=True, fill="green")
+    for i, val in enumerate(prefix):
+        x = x0 + i * cw
+        fill, stroke = ("blue_soft", "blue") if i == 4 else ("amber_soft", "amber") if i == 1 else ("card", "line")
+        s.rect(x, 170, bw, 52, fill=fill, stroke=stroke, sw=2 if i in (1, 4) else 1.5)
+        s.text(x + bw / 2, 203, str(val), size=20, weight=700, mono=True)
+        s.text(x + bw / 2, 242, str(i), size=12, fill="muted", mono=True)
+    s.text(476, 284, "prefix[4] - prefix[1] = 14 - 2 = 12", size=17, weight=700, mono=True)
+    s.text(476, 310, "Everything before index 4, minus everything before index 1.", size=14, fill="muted")
+    return s
+
+
+def two_sum_lookup(theme):
+    s = Svg(900, 366, theme)
+    rows = [(1, "9 - 1 = 8", "{ }", "8 not seen. Store 1."),
+            (5, "9 - 5 = 4", "{1: 0}", "4 not seen. Store 5."),
+            (3, "9 - 3 = 6", "{1: 0, 5: 1}", "6 not seen. Store 3."),
+            (8, "9 - 8 = 1", "{1: 0, 5: 1, 3: 2}", "1 is at index 0. Answer [0, 3]")]
+    s.text(450, 32, "nums = [1, 5, 3, 8]    target = 9", size=16, weight=700, mono=True)
+    for x, label in [(130, "Number"), (290, "Partner needed"), (510, "Seen so far (value: index)"), (760, "What happens")]:
+        s.text(x, 68, label, size=13, fill="muted")
+    for i, (num, need, seen, note) in enumerate(rows):
+        y = 84 + i * 64
+        found = i == len(rows) - 1
+        soft, colour = ("green_soft", "green") if found else ("blue_soft", "blue")
+        s.text(52, y + 31, f"index {i}", size=12, fill="muted")
+        s.rect(95, y, 70, 52, fill=soft, stroke=colour, sw=2)
+        s.text(130, y + 34, str(num), size=22, weight=700, mono=True)
+        s.text(290, y + 32, need, size=16, weight=600, mono=True)
+        s.rect(400, y, 220, 52, fill="green_soft" if found else "panel", stroke="green" if found else "line", sw=2 if found else 1.5)
+        s.text(510, y + 32, seen, size=15, weight=600, mono=True)
+        s.text(642, y + 31, note, size=14, anchor="start", weight=700 if found else 400, fill="green" if found else "ink")
+    s.text(450, 352, "One pass. Each number is checked against the dictionary first, then stored.", size=14, fill="muted")
+    return s
+
+
+def two_pointers(theme):
+    s = Svg(900, 296, theme)
+    word = "racecar"
+    x0, cw, bw = 170, 80, 72
+    pair_colours = [("blue_soft", "blue"), ("green_soft", "green"), ("amber_soft", "amber")]
+    centre = lambda i: x0 + i * cw + bw / 2
+    for step, (i, j) in enumerate([(0, 6), (1, 5), (2, 4)]):
+        control = 20 + step * 30
+        s.path(f"M{centre(i)} 108 C {centre(i)} {control}, {centre(j)} {control}, {centre(j)} 108",
+               stroke=pair_colours[step][1], sw=2.5)
+        s.text(centre(3), 34 + step * 23, f"step {step + 1}", size=12, weight=600, fill=pair_colours[step][1])
+    for i, ch in enumerate(word):
+        soft, colour = pair_colours[min(i, 6 - i)] if i != 3 else ("violet_soft", "violet")
+        s.rect(x0 + i * cw, 110, bw, 64, fill=soft, stroke=colour, sw=2)
+        s.text(centre(i), 152, ch, size=26, weight=700, mono=True)
+        s.text(centre(i), 196, str(i), size=12, fill="muted", mono=True)
+    s.text(228, 233, "left", size=15, weight=700, mono=True, fill="blue", anchor="end")
+    s.line(238, 228, 330, 228, stroke="blue", sw=2.5, arrow=True)
+    s.text(664, 233, "right", size=15, weight=700, mono=True, fill="blue", anchor="start")
+    s.line(654, 228, 562, 228, stroke="blue", sw=2.5, arrow=True)
+    s.text(centre(3), 232, "they meet here", size=12, fill="muted")
+    s.text(450, 274, "Compare the two ends. If they match, move both pointers one step inward.", size=14, fill="muted")
+    return s
+
+
+def sliding_window(theme):
+    s = Svg(900, 366, theme)
+    nums = [2, 1, 5, 1, 3, 2]
+    sums = ["2 + 1 + 5 = 8", "8 + 1 - 2 = 7", "7 + 3 - 1 = 9", "9 + 2 - 5 = 6"]
+    x0, cw, bw = 250, 60, 52
+    s.text(450, 30, "A window of size 3 sliding over [2, 1, 5, 1, 3, 2]", size=16, weight=700)
+    for row, note in enumerate(sums):
+        y = 56 + row * 70
+        best = row == 2
+        soft, colour = ("green_soft", "green") if best else ("blue_soft", "blue")
+        s.text(228, y + 28, f"window {row + 1}", size=13, fill="muted", anchor="end")
+        for i, val in enumerate(nums):
+            inside = row <= i < row + 3
+            s.rect(x0 + i * cw, y, bw, 46, fill=soft if inside else "panel", stroke=colour if inside else "line",
+                   sw=2 if inside else 1.5, r=8)
+            s.text(x0 + i * cw + bw / 2, y + 30, str(val), size=18, weight=700, mono=True,
+                   fill="ink" if inside else "muted")
+        s.text(640, y + 29, note, size=16, weight=700 if best else 600, mono=True, anchor="start",
+               fill="green" if best else "ink")
+        if best:
+            s.text(790, y + 29, "best", size=14, weight=700, anchor="start", fill="green")
+    s.text(450, 346, "Each slide adds the number that enters and subtracts the number that leaves.", size=14, fill="muted")
+    return s
+
+
+def dp_table(theme):
+    s = Svg(900, 304, theme)
+    dp = [0, 1, 1, 2, 3, 5, 8]
+    x0, cw, bw = 135, 90, 82
+    centre = lambda i: x0 + i * cw + bw / 2
+    s.text(450, 32, "Filling the table for fib_table(6)", size=16, weight=700)
+    s.path(f"M{centre(4)} 116 C {centre(4)} 50, {centre(6) + 18} 50, {centre(6) + 18} 113", stroke="blue", sw=2.5, arrow=True)
+    s.path(f"M{centre(5)} 116 C {centre(5)} 82, {centre(6) - 20} 82, {centre(6) - 20} 113", stroke="blue", sw=2.5, arrow=True)
+    for i, val in enumerate(dp):
+        fill, stroke = (("amber_soft", "amber") if i < 2 else ("blue_soft", "blue") if i in (4, 5)
+                        else ("green_soft", "green") if i == 6 else ("card", "line"))
+        s.rect(x0 + i * cw, 120, bw, 60, fill=fill, stroke=stroke, sw=1.5 if stroke == "line" else 2)
+        s.text(centre(i), 159, str(val), size=22, weight=700, mono=True)
+        s.text(centre(i), 204, f"dp[{i}]", size=13, fill="muted", mono=True)
+    s.text((centre(0) + centre(1)) / 2, 228, "base cases", size=13, weight=600, fill="amber")
+    s.text(450, 262, "dp[6] = dp[5] + dp[4] = 5 + 3 = 8", size=17, weight=700, mono=True)
+    s.text(450, 288, "Each cell is the sum of the two cells before it, filled from left to right.", size=14, fill="muted")
+    return s
+
+
 DIAGRAMS = {
+    "array-index": array_index,
+    "prefix-sum": prefix_sum,
+    "two-sum-lookup": two_sum_lookup,
+    "two-pointers": two_pointers,
+    "sliding-window": sliding_window,
+    "dp-table": dp_table,
     "git-areas": git_areas,
     "git-branch-merge": branch_merge,
     "chmod-bits": chmod_bits,

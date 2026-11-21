@@ -152,6 +152,11 @@ Return the indexes of the two numbers in `nums` that add up to `target`. Exactly
 
 `nums = [2, 7, 11, 15]`, `target = 9` → `[0, 1]`
 
+The picture traces a different list, so you can see the dictionary fill up before the partner is found.
+
+![Two Sum traced on the list 1, 5, 3, 8 with target 9. The numbers 1, 5 and 3 are stored. At 8 the partner 1 is found at index 0, so the answer is 0 and 3](../../assets/diagrams/two-sum-lookup-light.svg#only-light){ .ksr-diagram }
+![Two Sum traced on the list 1, 5, 3, 8 with target 9. The numbers 1, 5 and 3 are stored. At 8 the partner 1 is found at index 0, so the answer is 0 and 3](../../assets/diagrams/two-sum-lookup-dark.svg#only-dark){ .ksr-diagram }
+
 ??? question "Hint 1"
     For each number `x`, the partner you need is `target - x`. Brute force scans for it: O(n²).
 

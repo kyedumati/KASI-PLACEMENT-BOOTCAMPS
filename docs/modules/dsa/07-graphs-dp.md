@@ -276,6 +276,9 @@ print(fib_slow(20), fib_memo(50), fib_table(50))   # 6765 12586269025 1258626902
 6765 12586269025 12586269025
 ```
 
+![The table for fib_table of 6 holds 0, 1, 1, 2, 3, 5, 8. The last cell, 8, is the sum of the two cells before it, 5 and 3](../../assets/diagrams/dp-table-light.svg#only-light){ .ksr-diagram }
+![The table for fib_table of 6 holds 0, 1, 1, 2, 3, 5, 8. The last cell, 8, is the sum of the two cells before it, 5 and 3](../../assets/diagrams/dp-table-dark.svg#only-dark){ .ksr-diagram }
+
 Try `fib_slow(35)` and feel the delay. `fib_memo(35)` is instant.
 
 **The method for any DP problem:**

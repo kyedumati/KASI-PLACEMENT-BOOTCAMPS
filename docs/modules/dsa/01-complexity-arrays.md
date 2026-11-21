@@ -117,6 +117,9 @@ Space complexity counts the **extra** memory you allocate, not the input. You ca
 
 Traversal means visiting every element once. That is one loop, so it is O(n). Python gives you three ways to write it, and the problem decides which one you need.
 
+![A list of three prices, 40, 10 and 30, with the indexes 0, 1 and 2 under them](../../assets/diagrams/array-index-light.svg#only-light){ .ksr-diagram }
+![A list of three prices, 40, 10 and 30, with the indexes 0, 1 and 2 under them](../../assets/diagrams/array-index-dark.svg#only-dark){ .ksr-diagram }
+
 ```python
 prices = [40, 10, 30]
 
@@ -165,6 +168,9 @@ print(prefix[4] - prefix[1])            # 12
 ``` { .text .output }
 12
 ```
+
+![The list 2, 4, 1, 7, 3 above its prefix list 0, 2, 6, 7, 14, 17. The sum of 4, 1 and 7 is prefix 4 minus prefix 1, which is 14 minus 2, or 12](../../assets/diagrams/prefix-sum-light.svg#only-light){ .ksr-diagram }
+![The list 2, 4, 1, 7, 3 above its prefix list 0, 2, 6, 7, 14, 17. The sum of 4, 1 and 7 is prefix 4 minus prefix 1, which is 14 minus 2, or 12](../../assets/diagrams/prefix-sum-dark.svg#only-dark){ .ksr-diagram }
 
 Building takes O(n) once. Every query after that is O(1).
 

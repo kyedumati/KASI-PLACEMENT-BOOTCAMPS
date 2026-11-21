@@ -32,6 +32,9 @@ You can solve array and string problems in one pass and O(1) extra space by movi
 | **Fast and slow (same direction)** | `fast` reads every element; `slow` marks where the next kept element goes | Removing or moving elements in place |
 | **Fast and slow (different speeds)** | `slow` moves 1 step, `fast` moves 2 | Middle of a linked list, cycle detection |
 
+![The word racecar with a left pointer at the first letter and a right pointer at the last. Matching letters are compared in three steps until the pointers meet at the middle letter](../../assets/diagrams/two-pointers-light.svg#only-light){ .ksr-diagram }
+![The word racecar with a left pointer at the first letter and a right pointer at the last. Matching letters are compared in three steps until the pointers meet at the middle letter](../../assets/diagrams/two-pointers-dark.svg#only-dark){ .ksr-diagram }
+
 Opposite-ends template:
 
 ```python
@@ -78,6 +81,9 @@ print(max_sum_of_k([2, 1, 5, 1, 3, 2], 3))   # 9 (5 + 1 + 3)
 ``` { .text .output }
 9
 ```
+
+![A window of three numbers sliding over 2, 1, 5, 1, 3, 2. The four window sums are 8, 7, 9 and 6, and 9 is the best](../../assets/diagrams/sliding-window-light.svg#only-light){ .ksr-diagram }
+![A window of three numbers sliding over 2, 1, 5, 1, 3, 2. The four window sums are 8, 7, 9 and 6, and 9 is the best](../../assets/diagrams/sliding-window-dark.svg#only-dark){ .ksr-diagram }
 
 **Variable size:** grow the window on the right; shrink it from the left while it breaks the rule.
 
