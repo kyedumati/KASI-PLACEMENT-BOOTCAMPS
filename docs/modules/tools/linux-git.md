@@ -33,6 +33,13 @@ You can move around a file system from the terminal, and your Day 1 programs are
 
 ### Moving around
 
+```text title="Syntax"
+cd FOLDER
+ls [OPTIONS] [FOLDER]
+```
+
+Words in capitals are placeholders: you replace them with your own value. Anything in square brackets is optional. Every syntax line on this page follows that rule.
+
 ```bash
 pwd                 # where am I? (print working directory)
 ls                  # list files here
@@ -71,6 +78,14 @@ Press ++tab++ to complete a file or folder name. Press ++arrow-up++ to bring bac
 
 ### Creating, copying, moving, deleting
 
+```text title="Syntax"
+mkdir FOLDER
+cp SOURCE DESTINATION
+mv SOURCE DESTINATION
+rm FILE
+echo "TEXT" > FILE
+```
+
 ```bash
 mkdir practice              # make a folder
 cd practice
@@ -103,6 +118,10 @@ notes.txt
 
 `grep` prints the lines of a file that contain a pattern.
 
+```text title="Syntax"
+grep [OPTIONS] "PATTERN" FILE
+```
+
 ```bash
 grep "world" notes.txt        # lines containing "world"
 grep -i "HELLO" notes.txt     # ignore case
@@ -124,6 +143,10 @@ $ grep -r "hello" .
 ### Pipes
 
 A pipe `|` sends the output of one command into the next. Small commands joined by pipes do big jobs.
+
+```text title="Syntax"
+COMMAND-1 | COMMAND-2 | COMMAND-3
+```
 
 ```bash
 ls | wc -l                          # how many items are in this folder?
@@ -160,6 +183,10 @@ Each permission has a number: read is 4, write is 2 and execute is 1. Add them u
 | `chmod 644 notes.txt` | `rw-r--r--` | Owner reads and writes; everyone else reads |
 | `chmod +x run.sh` | adds `x` | Make a script runnable |
 
+```text title="Syntax"
+chmod MODE FILE
+```
+
 Before and after, on a two-line script:
 
 ``` { .text .output }
@@ -194,6 +221,10 @@ Working directory  --git add-->  Staging area  --git commit-->  Repository  --gi
 
 Tell Git who you are. Use the email of your GitHub account.
 
+```text title="Syntax"
+git config --global SETTING "VALUE"
+```
+
 ```bash
 git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
@@ -210,6 +241,11 @@ asha@example.com
 ```
 
 ### The daily cycle
+
+```text title="Syntax"
+git add FILE-OR-FOLDER
+git commit -m "MESSAGE"
+```
 
 ```bash
 git status                  # what has changed?
@@ -243,6 +279,13 @@ Run `git status` before and after every other command until the cycle is automat
 ### Branch and merge
 
 A branch lets you try something without touching the working version on `main`.
+
+```text title="Syntax"
+git switch -c NEW-BRANCH
+git switch BRANCH
+git merge BRANCH
+git branch -d BRANCH
+```
 
 ```bash
 git branch                  # list branches; * marks the current one
@@ -470,6 +513,11 @@ e7da4b0 Add Day 1 Python programs
 2. Name it `placement-training-2026`. Choose **Public**.
 3. Do **not** tick "Add a README file". You already have one.
 4. Click **Create repository**. GitHub shows a page with commands. Run the two below, with your own username.
+
+```text title="Syntax"
+git remote add NAME URL
+git push -u NAME BRANCH
+```
 
 ```bash
 git remote add origin https://github.com/YOUR-USERNAME/placement-training-2026.git
