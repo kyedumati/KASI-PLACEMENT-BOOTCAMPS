@@ -7,6 +7,7 @@ Finish this list before you come to class. The Day 1 setup slot is 30 minutes, w
 - [ ] **Python 3.10 or newer** from [python.org](https://www.python.org/downloads/). On Windows, tick **Add python.exe to PATH** in the installer.
 - [ ] **VS Code** from [code.visualstudio.com](https://code.visualstudio.com/), with the **Python** extension by Microsoft.
 - [ ] **Git** from [git-scm.com](https://git-scm.com/downloads).
+- [ ] **Jupyter**: in VS Code, install the **Jupyter** extension by Microsoft. Then install the notebook package with the command in the check below. You need it from the afternoon of Day 3.
 
 ## Accounts
 
@@ -52,6 +53,24 @@ print("Setup works")
     ```text
     python3 hello.py
     ```
+
+Last, install Jupyter and check it:
+
+=== "Windows"
+
+    ```text
+    python -m pip install notebook
+    python -m notebook --version
+    ```
+
+=== "macOS / Linux"
+
+    ```text
+    python3 -m pip install notebook
+    python3 -m notebook --version
+    ```
+
+The second command should print a version number.
 
 ## Bring
 

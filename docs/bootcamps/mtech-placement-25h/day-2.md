@@ -16,7 +16,7 @@ Keep the [pattern cheat sheet](../../modules/dsa/pattern-cheatsheet.md) open all
 | 1:45 to 2:45 | [Sorting and binary search](../../modules/dsa/04-sorting-binary-search.md) | Binary Search | Search Insert Position | Merge Sorted Array |
 | 2:45 to 3:45 | [Stacks, queues, linked lists](../../modules/dsa/05-stacks-queues-linked-lists.md) | Valid Parentheses | Reverse Linked List | Merge Two Sorted Lists |
 
-The 9:30 session opens with the 10-question recap quiz on Day 1.
+Today includes a 10-question recap quiz on Day 1. The trainer will tell you when it runs.
 
 ## Evening practice
 

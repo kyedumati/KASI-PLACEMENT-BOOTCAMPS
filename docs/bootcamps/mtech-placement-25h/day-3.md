@@ -14,7 +14,7 @@
 | 1:45 to 2:45 | Joins, subqueries, window functions | | | |
 | 2:45 to 3:45 | NumPy and pandas | | | |
 
-The 9:30 session opens with the 10-question recap quiz on Day 2.
+Today includes a 10-question recap quiz on Day 2. The trainer will tell you when it runs.
 
 !!! tip "Bring paper"
     Both morning sessions depend on tracing by hand: the call stack for recursion, and the queue for BFS. Students who trace on paper get these topics. Students who only watch do not.

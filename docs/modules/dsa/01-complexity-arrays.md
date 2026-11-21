@@ -66,6 +66,37 @@ Rules of thumb:
 
 Space complexity counts the **extra** memory you allocate, not the input. You can often spend memory to save time. Tomorrow's hashing session is exactly that trade: an extra set brings the function above from O(n²) to O(n).
 
+### Array traversal
+
+Traversal means visiting every element once. That is one loop, so it is O(n). Python gives you three ways to write it, and the problem decides which one you need.
+
+```python
+prices = [40, 10, 30]
+
+for price in prices:                    # by value: when the position does not matter
+    print(price, end=" ")
+print()
+
+for i in range(len(prices)):            # by index: when you need the position or a neighbour
+    print(i, prices[i], end=" | ")
+print()
+
+for i, price in enumerate(prices):      # both at once: the cleanest when you need both
+    print(i, price, end=" | ")
+print()
+
+for i in range(len(prices) - 1, -1, -1):    # backwards, from the last index down to 0
+    print(prices[i], end=" ")
+print()
+```
+
+``` { .text .output }
+40 10 30
+0 40 | 1 10 | 2 30 |
+0 40 | 1 10 | 2 30 |
+30 10 40
+```
+
 ### Prefix sums
 
 If you need many range sums, compute a running total once. Then any range sum is one subtraction.
