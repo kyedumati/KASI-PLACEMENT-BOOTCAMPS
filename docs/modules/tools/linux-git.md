@@ -42,6 +42,24 @@ cd ..               # go up one level
 cd ~                # go to your home folder
 ```
 
+A session for a user named `asha`, whose home folder holds `Documents` and `Downloads`. Lines that start with `$` are what she typed. The other lines are what the terminal printed.
+
+``` { .text .output }
+$ pwd
+/home/asha
+$ ls
+Documents
+Downloads
+$ cd Documents
+$ pwd
+/home/asha/Documents
+$ cd ..
+$ pwd
+/home/asha
+```
+
+In Git Bash on Windows the home folder looks like `/c/Users/asha`. On macOS it is `/Users/asha`.
+
 | Symbol | Means |
 |---|---|
 | `.` | The current folder |
@@ -67,6 +85,17 @@ mv old.txt archive/         # move into a folder
 rm archive/old.txt          # delete a file
 ```
 
+Most commands print nothing when they succeed. Silence means it worked. Only `cat` has something to show here, and an `ls` at the end confirms what is left:
+
+``` { .text .output }
+$ cat notes.txt
+hello
+world
+$ ls
+archive
+notes.txt
+```
+
 !!! warning "There is no recycle bin"
     `rm` deletes immediately and permanently. Read the command twice before you press Enter, and never run `rm -rf` on a path you have not checked.
 
@@ -78,7 +107,18 @@ rm archive/old.txt          # delete a file
 grep "world" notes.txt        # lines containing "world"
 grep -i "HELLO" notes.txt     # ignore case
 grep -n "hello" notes.txt     # show line numbers
-grep -r "def " .              # search every file under the current folder
+grep -r "hello" .             # search every file under the current folder
+```
+
+``` { .text .output }
+$ grep "world" notes.txt
+world
+$ grep -i "HELLO" notes.txt
+hello
+$ grep -n "hello" notes.txt
+1:hello
+$ grep -r "hello" .
+./notes.txt:hello
 ```
 
 ### Pipes
@@ -90,6 +130,15 @@ ls | wc -l                          # how many items are in this folder?
 cat notes.txt | grep "o" | wc -l    # how many lines contain the letter o?
 history | grep "git"                # which git commands have I run?
 ```
+
+``` { .text .output }
+$ ls | wc -l
+2
+$ cat notes.txt | grep "o" | wc -l
+2
+```
+
+The folder holds `archive` and `notes.txt`, so the first count is 2. Both lines of `notes.txt` contain an `o`, so the second is 2 as well. The `history` line prints your own past commands, so its output is different for everyone.
 
 ### Permissions with chmod
 
@@ -110,6 +159,20 @@ Each permission has a number: read is 4, write is 2 and execute is 1. Add them u
 | `chmod 755 run.sh` | `rwxr-xr-x` | Owner does everything; everyone else can read and run |
 | `chmod 644 notes.txt` | `rw-r--r--` | Owner reads and writes; everyone else reads |
 | `chmod +x run.sh` | adds `x` | Make a script runnable |
+
+Before and after, on a two-line script:
+
+``` { .text .output }
+$ ls -l run.sh
+-rw-r--r--  1 asha  staff  27 Nov 23 10:00 run.sh
+$ ./run.sh
+bash: ./run.sh: Permission denied
+$ chmod 755 run.sh
+$ ls -l run.sh
+-rwxr-xr-x  1 asha  staff  27 Nov 23 10:00 run.sh
+$ ./run.sh
+running
+```
 
 On Windows, Git Bash accepts `chmod` but Windows does not store these permissions, so `ls -l` may not change. Learn the numbers anyway: they are asked in interviews and used on every server.
 
@@ -137,6 +200,15 @@ git config --global user.email "you@example.com"
 git config --global init.defaultBranch main
 ```
 
+These print nothing. Check what was saved:
+
+``` { .text .output }
+$ git config --global user.name
+Asha Verma
+$ git config --global user.email
+asha@example.com
+```
+
 ### The daily cycle
 
 ```bash
@@ -144,6 +216,26 @@ git status                  # what has changed?
 git add .                   # stage everything in this folder
 git commit -m "Add Day 1 basics programs"
 git push                    # send the commits to GitHub
+```
+
+What the cycle prints when one file, `day1/prime.py`, has been edited. The seven-character code such as `3f9c2ab` is the commit's id, and yours will be different.
+
+``` { .text .output }
+$ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   day1/prime.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git add .
+$ git commit -m "Test divisors only up to the square root"
+[main 3f9c2ab] Test divisors only up to the square root
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+$ git status
+On branch main
+nothing to commit, working tree clean
 ```
 
 Run `git status` before and after every other command until the cycle is automatic.
@@ -161,6 +253,8 @@ git merge add-readme        # bring the branch's commits into main
 git branch -d add-readme    # delete the branch once it is merged
 ```
 
+Step 4 of the lab runs these commands and shows what each one prints.
+
 ### Writing a good commit message
 
 | Weak | Better |
@@ -170,6 +264,55 @@ git branch -d add-readme    # delete the branch once it is merged
 | `day 2` | `Add Day 2 hashing solutions` |
 
 Start with a verb, and say what the commit does.
+
+## In real projects
+
+The same commands, in a working developer's day. The trainer opens the session with one of these; read the rest after class.
+
+| What you learn here | Where it is used in real work |
+|---|---|
+| `cd`, `ls`, `cat` | Servers have no desktop. You log in over SSH and the terminal is all there is. |
+| `grep` and pipes | A site is failing at 2 a.m. You search a 2 GB log file for `ERROR` and count what you find. |
+| `chmod` | A deploy script will not run until it is executable. An SSH key is refused until only its owner can read it (`chmod 600`). |
+| `git commit` | Every change in a company's code has an author, a time and a message. "Who changed this, and why?" has an answer. |
+| Branch and merge | Each feature is built on its own branch and merged after a teammate reviews it in a pull request. |
+| `git push` | A push often triggers automatic tests and a deployment. This site is rebuilt and published by a push. |
+
+### Example: what went wrong on the server?
+
+Save these six lines as `app.log`. They are the kind of lines a web application writes while it runs.
+
+```text title="app.log"
+2026-11-23 10:01:12 INFO  login user=asha
+2026-11-23 10:01:40 ERROR payment timeout order=4411
+2026-11-23 10:02:05 INFO  login user=ravi
+2026-11-23 10:02:31 ERROR database connection refused
+2026-11-23 10:03:02 WARN  slow response 2300ms
+2026-11-23 10:03:44 ERROR payment timeout order=4415
+```
+
+```bash
+grep "ERROR" app.log                       # show every error
+grep -c "ERROR" app.log                    # count them
+grep "ERROR" app.log | grep -c "payment"   # how many are about payments?
+tail -n 2 app.log                          # the two most recent lines
+```
+
+``` { .text .output }
+$ grep "ERROR" app.log
+2026-11-23 10:01:40 ERROR payment timeout order=4411
+2026-11-23 10:02:31 ERROR database connection refused
+2026-11-23 10:03:44 ERROR payment timeout order=4415
+$ grep -c "ERROR" app.log
+3
+$ grep "ERROR" app.log | grep -c "payment"
+2
+$ tail -n 2 app.log
+2026-11-23 10:03:02 WARN  slow response 2300ms
+2026-11-23 10:03:44 ERROR payment timeout order=4415
+```
+
+Two of the three errors are payment timeouts. That is the first thing you would tell your team.
 
 ## Lab: create `placement-training-2026`
 
@@ -184,7 +327,25 @@ cd placement-training-2026
 ls day1
 ```
 
-You should see your programs from the three Python sessions, plus `students.csv`.
+``` { .text .output }
+$ ls day1
+char_frequency.py
+even_odd.py
+factorial.py
+fizzbuzz.py
+largest.py
+palindrome.py
+prime.py
+remove_duplicates.py
+reverse_number.py
+second_largest.py
+student_records.py
+students.csv
+sum_digits.py
+word_count.py
+```
+
+Your file names may differ. What matters is that the thirteen programs and the CSV are there.
 
 ### Step 2. Write a README
 
@@ -217,12 +378,56 @@ git commit -m "Add Day 1 Python programs"
 git log --oneline
 ```
 
+``` { .text .output }
+$ git init
+Initialized empty Git repository in /home/asha/placement-training-2026/.git/
+$ git status
+On branch main
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	README.md
+	day1/
+
+nothing added to commit but untracked files present (use "git add" to track)
+$ git add .
+$ git status
+On branch main
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+	new file:   README.md
+	new file:   day1/char_frequency.py
+	new file:   day1/even_odd.py
+	...12 more lines, one for each file...
+
+$ git commit -m "Add Day 1 Python programs"
+[main (root-commit) e7da4b0] Add Day 1 Python programs
+ 15 files changed, 17 insertions(+)
+ create mode 100644 README.md
+ create mode 100644 day1/char_frequency.py
+ ...13 more lines, one for each file...
+$ git log --oneline
+e7da4b0 Add Day 1 Python programs
+```
+
+Your commit id and your count of insertions will be different.
+
 The first `git status` lists your files as untracked. The second lists them as changes to be committed. `git log` shows one commit.
 
 ### Step 4. Practise a branch and a merge
 
 ```bash
 git switch -c improve-readme
+```
+
+``` { .text .output }
+$ git switch -c improve-readme
+Switched to a new branch 'improve-readme'
 ```
 
 Add one line about yourself to `README.md` and save it. Then:
@@ -236,6 +441,27 @@ git branch -d improve-readme
 git log --oneline
 ```
 
+``` { .text .output }
+$ git add README.md
+$ git commit -m "Add author line to README"
+[improve-readme c34a823] Add author line to README
+ 1 file changed, 1 insertion(+)
+$ git switch main
+Switched to branch 'main'
+$ git merge improve-readme
+Updating e7da4b0..c34a823
+Fast-forward
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+$ git branch -d improve-readme
+Deleted branch improve-readme (was c34a823).
+$ git log --oneline
+c34a823 Add author line to README
+e7da4b0 Add Day 1 Python programs
+```
+
+"Fast-forward" means `main` had no new commits of its own, so Git simply moved `main` forward to the branch's latest commit.
+
 `git log` now shows two commits on `main`.
 
 ### Step 5. Push to GitHub
@@ -248,6 +474,19 @@ git log --oneline
 ```bash
 git remote add origin https://github.com/YOUR-USERNAME/placement-training-2026.git
 git push -u origin main
+```
+
+A successful push ends like this. The counts and ids will be your own.
+
+``` { .text .output }
+$ git push -u origin main
+Enumerating objects: 21, done.
+Counting objects: 100% (21/21), done.
+Writing objects: 100% (21/21), 2.31 KiB | 2.31 MiB/s, done.
+Total 21 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/YOUR-USERNAME/placement-training-2026.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
 ```
 
 The first push asks you to sign in. A browser window opens: sign in to GitHub there and approve. Your GitHub account password typed into the terminal does not work.

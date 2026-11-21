@@ -38,6 +38,12 @@ print(area(5))                    # default used -> 5
 print(area(width=2, length=4))    # keyword arguments -> 8
 ```
 
+``` { .text .output }
+15
+5
+8
+```
+
 A function that has no `return` gives back `None`. Printing a value is not the same as returning it.
 
 ### Scope
@@ -52,6 +58,10 @@ def add_bonus():
     return total
 
 print(add_bonus(), total)   # 5 100
+```
+
+``` { .text .output }
+5 100
 ```
 
 Pass values in as arguments and get results back with `return`. Avoid the `global` keyword.
@@ -70,6 +80,11 @@ with open("notes.txt") as f:
         print(line.strip())
 ```
 
+``` { .text .output }
+Day 1 done
+Day 2 next
+```
+
 ### Handling errors
 
 Code that can fail goes in `try`. What to do about the failure goes in `except`. Catch the specific error you expect.
@@ -84,6 +99,12 @@ def to_marks(text):
 
 print(to_marks("88"))    # 88
 print(to_marks("abc"))   # Bad marks value: 'abc' then None
+```
+
+``` { .text .output }
+88
+Bad marks value: 'abc'
+None
 ```
 
 | Error | Raised when |
@@ -118,6 +139,10 @@ class Account:
 acc = Account("Asha")
 acc.deposit(500)
 print(acc.owner, acc.balance)        # Asha 500
+```
+
+``` { .text .output }
+Asha 500
 ```
 
 ### The four pillars
@@ -168,7 +193,58 @@ for shape in [Rectangle(4, 5), Circle(1)]:
     print(shape.describe())           # polymorphism: same call, different area()
 ```
 
+``` { .text .output }
+Rectangle with area 20.00
+Circle with area 3.14
+```
+
 `Shape("x")` raises `TypeError`, because an abstract class cannot be instantiated.
+
+## In real projects
+
+The same ideas, in software you already use. The trainer opens the session with one of these; read the rest after class.
+
+| What you learn here | Where it runs in real software |
+|---|---|
+| Functions | One `is_valid_email()` function, called from the sign-up page, the profile page and the admin page. |
+| Files | Reading a config file at start-up, writing a log, importing a CSV exported from Excel. |
+| `try` / `except` | A payment call times out. The app catches the error, tells the user, and does not crash. |
+| Class and object | `User`, `Order`, `Product`: every table in a web application has a class like these. |
+| Encapsulation | A bank account's balance changes only through `deposit()` and `withdraw()`, which check the rules. |
+| Inheritance and polymorphism | UPI, card and wallet are all payments. The checkout code calls `pay()` and does not care which one it has. |
+
+### Example: one checkout, many ways to pay
+
+The loop at the bottom is the checkout. It calls `pay()` on whatever it is given. Adding a wallet payment later means writing one new class; the checkout code does not change.
+
+```python
+class Payment:
+    def __init__(self, amount):
+        self.amount = amount
+
+    def pay(self):
+        raise NotImplementedError("each payment type writes its own pay()")
+
+
+class UpiPayment(Payment):
+    def pay(self):
+        return f"Paid ₹{self.amount} by UPI"
+
+
+class CardPayment(Payment):
+    def pay(self):
+        fee = self.amount * 0.02
+        return f"Paid ₹{self.amount} by card, fee ₹{fee:.2f}"
+
+
+for payment in [UpiPayment(500), CardPayment(1200)]:
+    print(payment.pay())
+```
+
+``` { .text .output }
+Paid ₹500 by UPI
+Paid ₹1200 by card, fee ₹24.00
+```
 
 ## Lab: student-record program
 
@@ -283,6 +359,45 @@ The starter code has seven `TODO` markers. Do them in order.
         courses, skipped = load_courses("students.csv")
         write_report(courses, skipped, "results.txt")
         print(f"{len(courses)} courses written to results.txt, {len(skipped)} rows skipped")
+    ```
+
+    ``` { .text .output }
+    3 courses written to results.txt, 3 rows skipped
+    ```
+
+    Then look at the report it wrote:
+
+    ```python
+    with open("results.txt") as f:
+        print(f.read())
+    ```
+
+    ``` { .text .output }
+    AIML
+      Average: 58.5
+      Topper:  Asha Verma
+      M101 Asha Verma: 88 (A)
+      M102 Ravi Kumar: 67 (B)
+      M105 Arjun Singh: 45 (C)
+      M111 Rahul Jain: 34 (F)
+
+    Cyber Security
+      Average: 75.0
+      Topper:  Meena Iyer
+      M103 Meena Iyer: 91 (A)
+      M108 Sneha Gupta: 58 (C)
+      M112 Nisha Reddy: 76 (A)
+
+    Data Science
+      Average: 77.5
+      Topper:  Pooja Shah
+      M106 Divya Nair: 73 (B)
+      M110 Pooja Shah: 82 (A)
+
+    Skipped rows: 3
+      M104 Zoya Khan: invalid literal for int() with base 10: 'abc'
+      M107 Kiran Rao: invalid literal for int() with base 10: ''
+      M109 Vikram Das: marks out of range: 120
     ```
 
 **Expected result.** The program prints `3 courses written to results.txt, 3 rows skipped`. In `results.txt`, the AIML average is `58.5` and its topper is Asha Verma.

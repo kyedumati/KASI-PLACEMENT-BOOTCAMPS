@@ -44,6 +44,10 @@ def factorial(n):
 print(factorial(4))   # 24
 ```
 
+``` { .text .output }
+24
+```
+
 **Trace the call stack on paper.** Each call waits for the one below it:
 
 ```text
@@ -105,6 +109,13 @@ class TreeNode:
 root = TreeNode(4,
                 TreeNode(2, TreeNode(1), TreeNode(3)),
                 TreeNode(6, None, TreeNode(7)))
+
+
+print(root.val, root.left.val, root.right.val)   # the root and its two children
+```
+
+``` { .text .output }
+4 2 6
 ```
 
 ### Depth-first traversals
@@ -141,6 +152,10 @@ inorder(root, result)
 print(result)      # [1, 2, 3, 4, 6, 7]
 ```
 
+``` { .text .output }
+[1, 2, 3, 4, 6, 7]
+```
+
 For the tree above: preorder is `[4, 2, 1, 3, 6, 7]` and postorder is `[1, 3, 2, 7, 6, 4]`.
 
 ### Binary search tree
@@ -161,7 +176,61 @@ print(search_bst(root, 3).val)    # 3
 print(search_bst(root, 5))        # None
 ```
 
+``` { .text .output }
+3
+None
+```
+
 Search is O(h), where h is the height: O(log n) for a balanced tree, and O(n) in the worst case when the tree is a single chain.
+
+## In real projects
+
+The same ideas, in software you already use. The trainer opens the session with one of these; read the rest after class.
+
+| What you learn here | Where it runs in real software |
+|---|---|
+| Recursion | Working out the size of a folder: the size of its files plus the size of every sub-folder, each computed the same way. |
+| Backtracking | A Sudoku solver. Listing every combination of pizza toppings or every valid seating plan. |
+| Tree | The file system, the HTML of a web page (the DOM), a company's organisation chart, the comments under a post. |
+| Binary search tree | Database indexes are trees, which is why a lookup among a million rows is fast. |
+| Level order (BFS) | Printing an organisation chart one level at a time: the head, then the managers, then their teams. |
+
+### Example: the size of a folder
+
+A folder is a tree. `total_size` calls itself on every child, so it works however deep the folders go.
+
+```python
+project = {
+    "name": "project", "size": 0, "children": [
+        {"name": "README.md", "size": 2, "children": []},
+        {"name": "src", "size": 0, "children": [
+            {"name": "app.py", "size": 14, "children": []},
+            {"name": "utils.py", "size": 6, "children": []},
+        ]},
+    ],
+}
+
+
+def total_size(node):
+    return node["size"] + sum(total_size(child) for child in node["children"])
+
+
+def show(node, depth=0):
+    print("  " * depth + f"{node['name']} ({total_size(node)} KB)")
+    for child in node["children"]:
+        show(child, depth + 1)
+
+
+show(project)
+```
+
+``` { .text .output }
+project (22 KB)
+  README.md (2 KB)
+  src (20 KB)
+    app.py (14 KB)
+    utils.py (6 KB)
+```
 
 ## Problems
 
@@ -179,6 +248,13 @@ Search is O(h), where h is the height: O(log n) for a balanced tree, and O(n) in
         if n < 2:                        # base cases: F(0) = 0, F(1) = 1
             return n
         return fib(n - 1) + fib(n - 2)
+
+
+    print([fib(n) for n in range(10)])
+    ```
+
+    ``` { .text .output }
+    [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
     ```
 
     **Time** O(2ⁿ). **Space** O(n) for the call stack.
@@ -202,6 +278,15 @@ For the example tree above → `3`. For an empty tree → `0`.
         if root is None:
             return 0
         return 1 + max(max_depth(root.left), max_depth(root.right))
+
+
+    print(max_depth(root))    # the tree from the Concepts section
+    print(max_depth(None))    # an empty tree
+    ```
+
+    ``` { .text .output }
+    3
+    0
     ```
 
     **Time** O(n): every node is visited once. **Space** O(h) for the call stack.
@@ -242,6 +327,13 @@ For the example tree above → `[[4], [2, 6], [1, 3, 7]]`
                     queue.append(node.right)
             result.append(level)
         return result
+
+
+    print(level_order(root))
+    ```
+
+    ``` { .text .output }
+    [[4], [2, 6], [1, 3, 7]]
     ```
 
     **Time** O(n). **Space** O(n) for the queue.
@@ -275,6 +367,13 @@ For the example tree above → `[[4], [2, 6], [1, 3, 7]]`
 
         backtrack(0)
         return result
+
+
+    print(subsets([1, 2, 3]))
+    ```
+
+    ``` { .text .output }
+    [[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]
     ```
 
     **Time** O(n × 2ⁿ): there are 2ⁿ subsets and copying each costs up to n. **Space** O(n) for the recursion, not counting the output.

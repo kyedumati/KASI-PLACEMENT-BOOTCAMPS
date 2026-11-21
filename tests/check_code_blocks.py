@@ -1,10 +1,15 @@
 """Run every ```python block in docs/modules and check the solutions.
 
-Usage:  python tests/check_code_blocks.py
+Usage:  python tests/check_code_blocks.py                   check everything
+        python tests/check_code_blocks.py --write-outputs   refresh the Output boxes
 
 All blocks on one page share a namespace and run top to bottom, the way a
 student would type them. input() is replaced with canned answers. After a
 page has run, the CHECKS for that page assert on the functions it defined.
+
+Every Python block must print something, and the Output box under it must be
+exactly what the block prints. The boxes are written by --write-outputs, never
+by hand.
 """
 import builtins
 import contextlib
@@ -23,36 +28,98 @@ DAY1_ASSETS = ROOT / "docs" / "assets" / "day1"
 
 FENCE_OPEN = re.compile(r"^(\s*)```python\s*$")
 FENCE_CLOSE = re.compile(r"^\s*```\s*$")
+OUTPUT_OPEN = re.compile(r"^\s*``` \{ \.text \.output \}\s*$")
+INPUT_NOTE = re.compile(r"^\s*<!-- input: (.*?) -->\s*$")
+OUTPUT_FENCE = "``` { .text .output }"
 
 
 def python_blocks(path):
-    blocks, current, start = [], None, 0
-    for number, line in enumerate(path.read_text().splitlines(), 1):
+    """Return the page's lines and one record per ```python block.
+
+    A line `<!-- input: 12, 45 -->` directly above a block gives the answers
+    that input() returns inside it. Without one, input() returns "7".
+    """
+    lines = path.read_text().splitlines()
+    blocks, current = [], None
+    for index, line in enumerate(lines):
         if current is None:
-            if FENCE_OPEN.match(line):
-                current, start = [], number
+            match = FENCE_OPEN.match(line)
+            if match:
+                note = INPUT_NOTE.match(lines[index - 1]) if index else None
+                current = {
+                    "open": index,
+                    "indent": match.group(1),
+                    "body": [],
+                    "inputs": [a.strip() for a in note.group(1).split(",")] if note else [],
+                }
         elif FENCE_CLOSE.match(line):
-            blocks.append((start, textwrap.dedent("\n".join(current))))
+            current["close"] = index
+            current["code"] = textwrap.dedent("\n".join(current.pop("body")))
+            blocks.append(current)
             current = None
         else:
-            current.append(line)
-    return blocks
+            current["body"].append(line)
+    return lines, blocks
 
 
 def run_page(path):
     """Execute the page's blocks. Return (namespace, list of stdout per block)."""
     namespace = {"__name__": "__main__"}
     outputs = []
-    builtins.input = lambda prompt="": "7"
-    for line, code in python_blocks(path):
+    _, blocks = python_blocks(path)
+    for block in blocks:
+        answers = list(block["inputs"])
+
+        def fake_input(prompt=""):
+            answer = answers.pop(0) if answers else "7"
+            print(f"{prompt}{answer}")          # what the terminal would show
+            return answer
+
+        builtins.input = fake_input
         buffer = io.StringIO()
+        line = block["open"] + 1
         try:
             with contextlib.redirect_stdout(buffer):
-                exec(compile(code, f"{path.name}:{line}", "exec"), namespace)
+                exec(compile(block["code"], f"{path.name}:{line}", "exec"), namespace)
         except Exception as error:
             raise AssertionError(f"{path.name} line {line}: {type(error).__name__}: {error}")
         outputs.append(buffer.getvalue())
     return namespace, outputs
+
+
+def with_outputs(path, outputs):
+    """Return the page text with an Output box after every Python block.
+
+    An existing Output box directly below a block is replaced, so running
+    this twice changes nothing. Returns (text, line numbers of silent blocks).
+    """
+    lines, blocks = python_blocks(path)
+    result, silent, cursor = [], [], 0
+    for block, output in zip(blocks, outputs):
+        result.extend(lines[cursor:block["close"] + 1])
+        cursor = block["close"] + 1
+
+        # Skip an Output box that is already there
+        probe = cursor
+        while probe < len(lines) and not lines[probe].strip():
+            probe += 1
+        if probe < len(lines) and OUTPUT_OPEN.match(lines[probe]):
+            probe += 1
+            while not FENCE_CLOSE.match(lines[probe]):
+                probe += 1
+            cursor = probe + 1
+
+        shown = [l.rstrip() for l in output.rstrip("\n").split("\n")]
+        if not output.strip():
+            silent.append(block["open"] + 1)
+            continue
+        indent = block["indent"]
+        result.append("")
+        result.append(indent + OUTPUT_FENCE)
+        result.extend((indent + l) if l else "" for l in shown)
+        result.append(indent + "```")
+    result.extend(lines[cursor:])
+    return "\n".join(result) + "\n", silent
 
 
 # ---------------------------------------------------------------- checks
@@ -60,11 +127,11 @@ def run_page(path):
 def check_basics(ns, out):
     text = "\n".join(out)
     assert "Odd" in text                      # even/odd with n = 7
-    assert "Largest is 7" in text
-    assert "7! = 5040" in text
-    assert "Prime" in text and "Not prime" not in text
-    assert "Sum of digits: 7" in text
-    assert "Reversed: 7" in text
+    assert "Largest is 45" in text            # inputs 12, 45, 7
+    assert "5! = 120" in text
+    assert "Prime" in text and "Not prime" not in text   # n = 29
+    assert "Sum of digits: 10" in text        # n = 1234
+    assert "Reversed: 4321" in text
     fizz = out[-1].split()
     assert fizz[:5] == ["1", "2", "Fizz", "4", "Buzz"] and fizz[14] == "FizzBuzz" and len(fizz) == 20
 
@@ -217,6 +284,7 @@ CHECKS = {
 
 
 def main():
+    write = "--write-outputs" in sys.argv
     failures = 0
     pages = sorted(MODULES.rglob("*.md"))
     workdir = tempfile.mkdtemp()
@@ -225,7 +293,7 @@ def main():
 
     for page in pages:
         key = page.relative_to(MODULES).as_posix()
-        blocks = python_blocks(page)
+        _, blocks = python_blocks(page)
         if not blocks:
             continue
         try:
@@ -235,6 +303,15 @@ def main():
                 status = f"ok    {len(blocks):2d} blocks, solutions checked"
             else:
                 status = f"ok    {len(blocks):2d} blocks, no solution checks"
+
+            text, silent = with_outputs(page, outputs)
+            if write:
+                page.write_text(text)
+            elif text != page.read_text():
+                raise AssertionError("Output boxes are out of date. Run with --write-outputs.")
+            if silent:
+                raise AssertionError(f"blocks that print nothing, at lines {silent}")
+            status += ", outputs match"
         except AssertionError as error:
             failures += 1
             status = f"FAIL  {error or 'solution check failed'}"

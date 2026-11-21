@@ -46,6 +46,11 @@ fast = "".join(parts)
 print(slow, fast)
 ```
 
+``` { .text .output }
+hello HELLO
+abc abc
+```
+
 ### How a hash map finds things in O(1)
 
 A dictionary runs the key through a hash function to get a number, and uses that number to jump straight to a slot. It does not scan. That is why `key in my_dict` and `x in my_set` take the same time whether there are ten items or ten million.
@@ -77,6 +82,12 @@ for i, x in enumerate(nums):
 print(position)                  # {4: 2, 1: 1, 2: 3}
 ```
 
+``` { .text .output }
+repeat: 4
+{4: 2, 1: 1, 2: 1}
+{4: 2, 1: 1, 2: 3}
+```
+
 Python also ships a ready-made frequency map:
 
 ```python
@@ -85,7 +96,51 @@ from collections import Counter
 print(Counter("banana"))         # Counter({'a': 3, 'n': 2, 'b': 1})
 ```
 
+``` { .text .output }
+Counter({'a': 3, 'n': 2, 'b': 1})
+```
+
 Write the manual loop first so you can explain it. Use `Counter` once you can.
+
+## In real projects
+
+The same ideas, in software you already use. The trainer opens the session with one of these; read the rest after class.
+
+| What you learn here | Where it runs in real software |
+|---|---|
+| Dictionary lookup in O(1) | A cache such as Redis: "have I already computed the answer for this request?" A database index works on the same idea. |
+| Set membership | "This email is already registered." Removing duplicate contacts when you import a phone book. |
+| Frequency count | Trending hashtags, most-searched products, the most common error in a log. |
+| Store what you have seen, look up what you need | Matching a refund to its original payment: one pass, one dictionary. |
+| Anagram and character counts | Spell checkers and word games compare letter counts, not letter order. |
+
+### Example: trending hashtags
+
+The counting idiom from the Python session, on real-looking data. Count every tag, then sort by the count.
+
+```python
+posts = [
+    "#python #ai",
+    "#placement #python",
+    "#ai #python #dsa",
+    "#placement",
+]
+
+count = {}
+for post in posts:
+    for tag in post.split():
+        count[tag] = count.get(tag, 0) + 1
+
+top = sorted(count.items(), key=lambda pair: pair[1], reverse=True)
+for tag, times in top[:3]:
+    print(tag, times)
+```
+
+``` { .text .output }
+#python 3
+#ai 2
+#placement 2
+```
 
 ## Problems
 
@@ -113,6 +168,15 @@ Return the indexes of the two numbers in `nums` that add up to `target`. Exactly
                 return [seen[need], i]
             seen[x] = i
         return []
+
+
+    print(two_sum([2, 7, 11, 15], 9))
+    print(two_sum([3, 2, 4], 6))
+    ```
+
+    ``` { .text .output }
+    [0, 1]
+    [1, 2]
     ```
 
     **Time** O(n). **Space** O(n).
@@ -145,6 +209,15 @@ Return `True` if `t` uses exactly the same letters as `s`, the same number of ti
                 return False
             count[ch] -= 1
         return True
+
+
+    print(is_anagram("anagram", "nagaram"))
+    print(is_anagram("rat", "car"))
+    ```
+
+    ``` { .text .output }
+    True
+    False
     ```
 
     **Time** O(n). **Space** O(k), where k is the number of distinct characters.
@@ -168,6 +241,15 @@ Return `True` if any value appears at least twice.
                 return True
             seen.add(x)
         return False
+
+
+    print(contains_duplicate([1, 2, 3, 1]))
+    print(contains_duplicate([1, 2, 3, 4]))
+    ```
+
+    ``` { .text .output }
+    True
+    False
     ```
 
     **Time** O(n). **Space** O(n).
@@ -196,6 +278,17 @@ Return the index of the first character that appears only once, or `-1` if there
             if count[ch] == 1:
                 return i
         return -1
+
+
+    print(first_uniq_char("leetcode"))       # l
+    print(first_uniq_char("loveleetcode"))   # v
+    print(first_uniq_char("aabb"))           # none
+    ```
+
+    ``` { .text .output }
+    0
+    2
+    -1
     ```
 
     **Time** O(n): two passes are still linear. **Space** O(k).

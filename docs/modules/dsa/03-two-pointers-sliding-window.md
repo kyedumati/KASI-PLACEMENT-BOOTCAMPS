@@ -51,6 +51,10 @@ def pair_sum_sorted(nums, target):
 print(pair_sum_sorted([1, 3, 4, 6, 9], 10))   # True (1 + 9)
 ```
 
+``` { .text .output }
+True
+```
+
 This is the answer to the Two Sum follow-up: on a sorted array you need no extra memory.
 
 ### Sliding window
@@ -71,6 +75,10 @@ def max_sum_of_k(nums, k):
 print(max_sum_of_k([2, 1, 5, 1, 3, 2], 3))   # 9 (5 + 1 + 3)
 ```
 
+``` { .text .output }
+9
+```
+
 **Variable size:** grow the window on the right; shrink it from the left while it breaks the rule.
 
 ```text
@@ -84,6 +92,39 @@ for right in range(len(s)):
 ```
 
 Each element enters once and leaves at most once, so the total is O(n) even though there is a `while` inside the `for`.
+
+## In real projects
+
+The same ideas, in software you already use. The trainer opens the session with one of these; read the rest after class.
+
+| What you learn here | Where it runs in real software |
+|---|---|
+| Two pointers from both ends | Checking a palindrome, reversing in place, finding a pair of prices that adds up to a budget in a sorted list. |
+| Slow and fast pointer | Compacting a list in place: removing deleted records without using a second list. |
+| Fixed sliding window | The 7-day moving average on a stock chart, or "average response time over the last 5 minutes" on a monitoring dashboard. |
+| Variable sliding window | Rate limiting: allow at most 100 requests from one user in any 60-second window. |
+
+### Example: moving average on a price chart
+
+The 3-day average for every position. The window slides one step at a time: add the price that enters, subtract the price that leaves. No window is added up from scratch.
+
+```python
+prices = [100, 102, 101, 105, 110, 108, 112]
+k = 3
+
+window_sum = sum(prices[:k])
+averages = [round(window_sum / k, 2)]
+
+for right in range(k, len(prices)):
+    window_sum += prices[right] - prices[right - k]    # one in, one out
+    averages.append(round(window_sum / k, 2))
+
+print(averages)
+```
+
+``` { .text .output }
+[101.0, 102.67, 105.33, 107.67, 110.0]
+```
 
 ## Problems
 
@@ -113,6 +154,15 @@ Return `True` if the string is a palindrome when you consider only letters and d
                 left += 1
                 right -= 1
         return True
+
+
+    print(is_palindrome("A man, a plan, a canal: Panama"))
+    print(is_palindrome("race a car"))
+    ```
+
+    ``` { .text .output }
+    True
+    False
     ```
 
     **Time** O(n). **Space** O(1).
@@ -138,6 +188,15 @@ Move every 0 to the end of `nums`, keeping the other elements in their original 
             if nums[fast] != 0:
                 nums[slow], nums[fast] = nums[fast], nums[slow]
                 slow += 1
+
+
+    nums = [0, 1, 0, 3, 12]
+    move_zeroes(nums)        # changes the list in place, returns nothing
+    print(nums)
+    ```
+
+    ``` { .text .output }
+    [1, 3, 12, 0, 0]
     ```
 
     **Time** O(n). **Space** O(1).
@@ -171,6 +230,17 @@ Return the length of the longest substring in which no character repeats.
             window.add(s[right])
             best = max(best, right - left + 1)
         return best
+
+
+    print(length_of_longest_substring("abcabcbb"))   # abc
+    print(length_of_longest_substring("bbbbb"))      # b
+    print(length_of_longest_substring("pwwkew"))     # wke
+    ```
+
+    ``` { .text .output }
+    3
+    1
+    3
     ```
 
     **Time** O(n). **Space** O(k), where k is the number of distinct characters.

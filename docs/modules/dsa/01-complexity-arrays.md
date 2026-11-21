@@ -45,6 +45,15 @@ def has_pair_with_sum_slow(nums, target):
             if nums[i] + nums[j] == target:
                 return True
     return False                       # O(n²) time, O(1) space
+
+
+print(has_pair_with_sum_slow([2, 7, 11, 15], 9))
+print(has_pair_with_sum_slow([2, 7, 11, 15], 100))
+```
+
+``` { .text .output }
+True
+False
 ```
 
 Rules of thumb:
@@ -75,11 +84,54 @@ prefix = build_prefix(nums)             # [0, 2, 6, 7, 14, 17]
 print(prefix[4] - prefix[1])            # 12
 ```
 
+``` { .text .output }
+12
+```
+
 Building takes O(n) once. Every query after that is O(1).
 
 ### The one-pass idea
 
 Many array problems are solved by walking left to right while carrying one or two values that summarise everything seen so far. Ask: **"What do I need to remember from the past to decide at this element?"**
+
+## In real projects
+
+The same ideas, in software you already use. The trainer opens the session with one of these; read the rest after class.
+
+| What you learn here | Where it runs in real software |
+|---|---|
+| Big-O | A page that loads in 1 second for 1,000 users. Will it take 2 seconds or 20 minutes for a million? Big-O answers that before you ship. |
+| Running total | The balance column of a bank statement: each row is the previous balance plus this transaction. |
+| Prefix sums | A sales dashboard that answers "total between any two dates" instantly, however long the range. |
+| Track the minimum so far | The best day to buy and the best day to sell, from one pass over a price history. |
+| Kadane's algorithm | The most profitable run of consecutive days in a profit-and-loss sheet. |
+
+### Example: sales between any two days
+
+Build the prefix array once. After that, every "total from day X to day Y" question is one subtraction, not a loop.
+
+```python
+daily_sales = [1200, 800, 1500, 700, 2100, 900, 1300]    # Monday to Sunday
+
+prefix = [0]
+for amount in daily_sales:
+    prefix.append(prefix[-1] + amount)
+
+
+def sales_between(first_day, last_day):      # days are numbered from 1
+    return prefix[last_day] - prefix[first_day - 1]
+
+
+print("Whole week:", sales_between(1, 7))
+print("Tuesday to Thursday:", sales_between(2, 4))
+print("Weekend:", sales_between(6, 7))
+```
+
+``` { .text .output }
+Whole week: 8500
+Tuesday to Thursday: 3000
+Weekend: 2200
+```
 
 ## Problems
 
@@ -100,6 +152,13 @@ Return a list where position `i` holds the sum of `nums[0]` to `nums[i]`.
             total += x
             result.append(total)
         return result
+
+
+    print(running_sum([1, 2, 3, 4]))
+    ```
+
+    ``` { .text .output }
+    [1, 3, 6, 10]
     ```
 
     **Time** O(n). **Space** O(n) for the output.
@@ -129,6 +188,15 @@ Return a list where position `i` holds the sum of `nums[0]` to `nums[i]`.
             elif price - min_price > best:
                 best = price - min_price
         return best
+
+
+    print(max_profit([7, 1, 5, 3, 6, 4]))   # buy at 1, sell at 6
+    print(max_profit([7, 6, 4, 3, 1]))      # prices only fall: no trade
+    ```
+
+    ``` { .text .output }
+    5
+    0
     ```
 
     **Time** O(n). **Space** O(1).
@@ -155,6 +223,15 @@ Return the largest sum of any contiguous, non-empty part of `nums`.
             current = max(x, current + x)   # start fresh at x, or extend
             best = max(best, current)
         return best
+
+
+    print(max_subarray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))   # [4, -1, 2, 1]
+    print(max_subarray([-3, -1, -2]))                      # all negative
+    ```
+
+    ``` { .text .output }
+    6
+    -1
     ```
 
     **Time** O(n). **Space** O(1), if you loop by index instead of slicing.

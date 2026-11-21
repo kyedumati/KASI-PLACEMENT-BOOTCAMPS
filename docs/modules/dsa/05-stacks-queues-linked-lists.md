@@ -40,6 +40,13 @@ print(stack)           # [1, 2]
 print(not stack)       # is it empty? -> False
 ```
 
+``` { .text .output }
+3
+3
+[1, 2]
+False
+```
+
 All four operations are O(1).
 
 ### Queue: first in, first out
@@ -55,6 +62,11 @@ queue.append("B")
 queue.append("C")
 print(queue.popleft())     # dequeue from the front -> A
 print(queue)               # deque(['B', 'C'])
+```
+
+``` { .text .output }
+A
+deque(['B', 'C'])
 ```
 
 ### Linked list
@@ -92,6 +104,10 @@ head = build_list([1, 2, 3])
 print(to_list(head))       # [1, 2, 3]
 ```
 
+``` { .text .output }
+[1, 2, 3]
+```
+
 Keep `build_list` and `to_list` in a file. LeetCode gives you the head node, but on your own machine you need these two helpers to test.
 
 | | Array (Python list) | Linked list |
@@ -103,6 +119,44 @@ Keep `build_list` and `to_list` in a file. LeetCode gives you the head node, but
 
 !!! tip "The dummy node trick"
     When you build a new list, start with a throwaway `dummy` node and attach to it. At the end, return `dummy.next`. This removes the special case for "the list is empty so far".
+
+## In real projects
+
+The same ideas, in software you already use. The trainer opens the session with one of these; read the rest after class.
+
+| What you learn here | Where it runs in real software |
+|---|---|
+| Stack | Undo in an editor, the Back button in a browser, and the call stack that runs your functions. |
+| Stack for matching pairs | VS Code highlighting an unclosed bracket. A compiler checking that every `{` has a `}`. |
+| Queue | A print queue, a customer-support ticket line, and background job queues such as Celery or Kafka. |
+| Linked list | Next and previous in a music playlist. The "least recently used" list inside a cache. |
+
+### Example: the Back button and a ticket queue
+
+The browser history is a stack: the last page you opened is the first one you leave. A support desk is a queue: the first ticket raised is the first one served.
+
+```python
+from collections import deque
+
+pages = []                               # a stack
+for page in ["home", "courses", "python", "lab-1"]:
+    pages.append(page)                   # visiting a page pushes it
+
+pages.pop()                              # Back
+pages.pop()                              # Back
+print("Now on:", pages[-1])
+
+tickets = deque(["T1", "T2", "T3"])      # a queue
+tickets.append("T4")                     # a new ticket joins at the back
+print("Serving:", tickets.popleft())     # the oldest ticket is served first
+print("Waiting:", list(tickets))
+```
+
+``` { .text .output }
+Now on: courses
+Serving: T1
+Waiting: ['T2', 'T3', 'T4']
+```
 
 ## Problems
 
@@ -129,6 +183,17 @@ The string contains only `(`, `)`, `{`, `}`, `[` and `]`. Return `True` if every
             else:                                        # an opening bracket
                 stack.append(ch)
         return not stack                                 # nothing left open
+
+
+    for text in ["()[]{}", "{[]}", "([)]", "(("]:
+        print(text, is_valid(text))
+    ```
+
+    ``` { .text .output }
+    ()[]{} True
+    {[]} True
+    ([)] False
+    (( False
     ```
 
     **Time** O(n). **Space** O(n).
@@ -160,6 +225,14 @@ Reverse a singly linked list and return the new head.
             prev = current              # 3. move prev forward
             current = next_node         # 4. move current forward
         return prev
+
+
+    head = build_list([1, 2, 3, 4, 5])
+    print(to_list(reverse_list(head)))
+    ```
+
+    ``` { .text .output }
+    [5, 4, 3, 2, 1]
     ```
 
     **Time** O(n). **Space** O(1).
@@ -201,6 +274,14 @@ Given the heads of two sorted linked lists, join them into one sorted list and r
 
         tail.next = list1 or list2      # attach whatever is left
         return dummy.next
+
+
+    merged = merge_two_lists(build_list([1, 2, 4]), build_list([1, 3, 4]))
+    print(to_list(merged))
+    ```
+
+    ``` { .text .output }
+    [1, 1, 2, 3, 4, 4]
     ```
 
     **Time** O(m + n). **Space** O(1).

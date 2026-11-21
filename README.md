@@ -25,6 +25,14 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python tests/check_code_blocks.py
 ```
 
+Every Python example has an Output box under it. The boxes are generated, not typed: after you change any Python block, refresh them with the command below. The check above fails if a box is stale or if a block prints nothing.
+
+```bash
+.venv/bin/python tests/check_code_blocks.py --write-outputs
+```
+
+A line `<!-- input: 12, 45, 7 -->` directly above a block sets what `input()` returns inside it. Outputs on the Linux and Git page are pasted from a real terminal session and are not checked automatically.
+
 Build a copy that opens from a pen drive with no server and no internet:
 
 ```bash

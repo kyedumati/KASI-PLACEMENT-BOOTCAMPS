@@ -46,6 +46,12 @@ print(len(nums))           # 4
 print(30 in nums)          # True, but this scans the list: O(n)
 ```
 
+``` { .text .output }
+5 40
+4
+True
+```
+
 ### Slicing
 
 `sequence[start:stop:step]`. The stop index is excluded. It works on lists, tuples and strings.
@@ -60,6 +66,14 @@ print(nums[::-1])   # reversed: [5, 4, 3, 2, 1, 0]
 print("python"[::-1])   # nohtyp
 ```
 
+``` { .text .output }
+[1, 2, 3]
+[0, 1, 2]
+[3, 4, 5]
+[5, 4, 3, 2, 1, 0]
+nohtyp
+```
+
 ### Tuples
 
 A tuple cannot be changed after it is created. That makes it safe to use as a dictionary key or a set member.
@@ -70,6 +84,10 @@ x, y = point          # unpacking
 a, b = 1, 2
 a, b = b, a           # swap without a temporary variable
 print(x, y, a, b)     # 3 4 2 1
+```
+
+``` { .text .output }
+3 4 2 1
 ```
 
 ### Sets
@@ -85,6 +103,13 @@ print(set([1, 2, 2, 3, 3, 3]))   # {1, 2, 3}
 print({1, 2, 3} & {2, 3, 4})     # intersection: {2, 3}
 ```
 
+``` { .text .output }
+{5}
+True
+{1, 2, 3}
+{2, 3}
+```
+
 ### Dictionaries
 
 ```python
@@ -98,6 +123,14 @@ for name, score in marks.items():
     print(name, score)
 ```
 
+``` { .text .output }
+82
+0
+Asha 82
+Ravi 67
+Meena 91
+```
+
 The counting idiom you will use all week:
 
 ```python
@@ -105,6 +138,10 @@ count = {}
 for ch in "banana":
     count[ch] = count.get(ch, 0) + 1
 print(count)   # {'b': 1, 'a': 3, 'n': 2}
+```
+
+``` { .text .output }
+{'b': 1, 'a': 3, 'n': 2}
 ```
 
 ### List comprehensions
@@ -115,6 +152,10 @@ A one-line way to build a list from a loop.
 squares = [x * x for x in range(1, 6)]            # [1, 4, 9, 16, 25]
 evens = [x for x in range(10) if x % 2 == 0]      # [0, 2, 4, 6, 8]
 print(squares, evens)
+```
+
+``` { .text .output }
+[1, 4, 9, 16, 25] [0, 2, 4, 6, 8]
 ```
 
 ### String methods
@@ -130,6 +171,58 @@ print(s.strip().split())         # ['Placement', 'Training', '2026']
 print("-".join(["a", "b", "c"])) # a-b-c
 print(s.replace("2026", "Week"))
 print("a1".isalnum(), "abc".isalpha(), "42".isdigit())
+```
+
+``` { .text .output }
+Placement Training 2026
+  placement training 2026     PLACEMENT TRAINING 2026
+['Placement', 'Training', '2026']
+a-b-c
+  Placement Training Week
+True True True
+```
+
+## In real projects
+
+The same ideas, in software you already use. The trainer opens the session with one of these; read the rest after class.
+
+| What you learn here | Where it runs in real software |
+|---|---|
+| List | The items in a shopping cart, the messages in a chat, the rows of a search result. |
+| Tuple | A fixed pair such as (latitude, longitude) for a delivery address, or (row, column) in a grid. |
+| Set | Unique visitors to a site today. "Is this username already taken?" |
+| Dictionary | A user profile, a settings file, and every JSON response from a web API. |
+| Comprehension | Filtering records: only the orders above ₹1000, only the students who passed. |
+| String methods | Cleaning what a user typed: `email.strip().lower()` before saving it. |
+
+### Example: a shopping-cart summary
+
+One cart, three questions. A list holds the cart lines, each line is a dictionary, a set finds the distinct categories, and the counting idiom adds up the spend per category.
+
+```python
+cart = [
+    {"item": "Notebook", "category": "Stationery", "price": 60, "qty": 3},
+    {"item": "Pen", "category": "Stationery", "price": 10, "qty": 5},
+    {"item": "USB cable", "category": "Electronics", "price": 250, "qty": 1},
+]
+
+total = sum(line["price"] * line["qty"] for line in cart)
+categories = sorted({line["category"] for line in cart})    # a set removes the duplicate
+
+spend = {}
+for line in cart:
+    amount = line["price"] * line["qty"]
+    spend[line["category"]] = spend.get(line["category"], 0) + amount
+
+print("Total:", total)
+print("Categories:", categories)
+print("Spend by category:", spend)
+```
+
+``` { .text .output }
+Total: 480
+Categories: ['Electronics', 'Stationery']
+Spend by category: {'Stationery': 230, 'Electronics': 250}
 ```
 
 ## Lab
@@ -148,6 +241,17 @@ Given a string, print how many times each character appears.
 
     for ch, times in count.items():
         print(ch, times)
+    ```
+
+    ``` { .text .output }
+    p 1
+    l 1
+    a 1
+    c 1
+    e 2
+    m 1
+    n 1
+    t 1
     ```
 
 ### 2. Remove duplicates · Live
@@ -169,6 +273,10 @@ Given a list, produce a list with duplicates removed, keeping the first occurren
             unique.append(x)
 
     print(unique)   # [3, 1, 2, 5]
+    ```
+
+    ``` { .text .output }
+    [3, 1, 2, 5]
     ```
 
 ### 3. Second largest · Solo
@@ -200,6 +308,11 @@ Given a list of numbers, print the second largest distinct value. For `[10, 40, 
     print(second)   # 30
     ```
 
+    ``` { .text .output }
+    30
+    30
+    ```
+
 ### 4. Palindrome string · Solo
 
 Given a string, print whether it reads the same forwards and backwards. Ignore case.
@@ -210,6 +323,10 @@ Given a string, print whether it reads the same forwards and backwards. Ignore c
 
     cleaned = text.lower()
     print(cleaned == cleaned[::-1])   # True
+    ```
+
+    ``` { .text .output }
+    True
     ```
 
 ### 5. Word count · Solo
@@ -226,6 +343,18 @@ Given a sentence, print each word and how many times it appears. Ignore case.
 
     for word, times in count.items():
         print(word, times)
+    ```
+
+    ``` { .text .output }
+    the 3
+    quick 1
+    brown 1
+    fox 1
+    jumps 1
+    over 1
+    lazy 1
+    dog 1
+    end 1
     ```
 
 ## Common mistakes

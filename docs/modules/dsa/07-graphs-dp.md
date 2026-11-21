@@ -44,6 +44,12 @@ graph = {
     "D": ["B"],
     "E": ["B", "C"],
 }
+
+print(graph["B"])   # the neighbours of B
+```
+
+``` { .text .output }
+['A', 'D', 'E']
 ```
 
 ### BFS and DFS templates
@@ -83,6 +89,11 @@ def dfs(graph, node, visited=None, order=None):
 
 print(bfs(graph, "A"))   # ['A', 'B', 'C', 'D', 'E']
 print(dfs(graph, "A"))   # ['A', 'B', 'D', 'E', 'C']
+```
+
+``` { .text .output }
+['A', 'B', 'C', 'D', 'E']
+['A', 'B', 'D', 'E', 'C']
 ```
 
 | | BFS | DFS |
@@ -147,6 +158,19 @@ The grid holds `"1"` for land and `"0"` for water. An island is a group of land 
                     count += 1
                     sink(r, c)
         return count
+
+
+    grid = [
+        ["1", "1", "0", "0", "0"],
+        ["1", "1", "0", "0", "0"],
+        ["0", "0", "1", "0", "0"],
+        ["0", "0", "0", "1", "1"],
+    ]
+    print(num_islands(grid))
+    ```
+
+    ``` { .text .output }
+    3
     ```
 
     **Time** O(rows × cols): each cell is visited a constant number of times. **Space** O(rows × cols) for the recursion in the worst case.
@@ -184,6 +208,21 @@ Starting at cell `(sr, sc)`, repaint that cell and every cell connected to it th
 
         fill(sr, sc)
         return image
+
+
+    image = [
+        [1, 1, 1],
+        [1, 1, 0],
+        [1, 0, 1],
+    ]
+    for row in flood_fill(image, 1, 1, 2):
+        print(row)
+    ```
+
+    ``` { .text .output }
+    [2, 2, 2]
+    [2, 2, 0]
+    [2, 0, 1]
     ```
 
     **Time** O(rows × cols). **Space** O(rows × cols) for the recursion.
@@ -234,6 +273,10 @@ def fib_table(n):
 print(fib_slow(20), fib_memo(50), fib_table(50))   # 6765 12586269025 12586269025
 ```
 
+``` { .text .output }
+6765 12586269025 12586269025
+```
+
 Try `fib_slow(35)` and feel the delay. `fib_memo(35)` is instant.
 
 **The method for any DP problem:**
@@ -269,6 +312,13 @@ A staircase has `n` steps. Each move climbs 1 or 2 steps. Return the number of d
         for i in range(3, n + 1):
             dp[i] = dp[i - 1] + dp[i - 2]
         return dp[n]
+
+
+    print([climb_stairs(n) for n in range(1, 8)])
+    ```
+
+    ``` { .text .output }
+    [1, 2, 3, 5, 8, 13, 21]
     ```
 
     **Time** O(n). **Space** O(n).
@@ -283,6 +333,13 @@ A staircase has `n` steps. Each move climbs 1 or 2 steps. Return the number of d
         for _ in range(3, n + 1):
             prev, current = current, prev + current
         return current
+
+
+    print(climb_stairs_o1(5), climb_stairs_o1(10))
+    ```
+
+    ``` { .text .output }
+    8 89
     ```
 
     **Time** O(n). **Space** O(1).
@@ -316,6 +373,15 @@ A staircase has `n` steps. Each move climbs 1 or 2 steps. Return the number of d
             dp[i] = max(dp[i - 1],                 # skip house i
                         dp[i - 2] + nums[i])       # take house i
         return dp[-1]
+
+
+    print(rob([1, 2, 3, 1]))      # houses 1 and 3
+    print(rob([2, 7, 9, 3, 1]))   # houses 1, 3 and 5
+    ```
+
+    ``` { .text .output }
+    4
+    12
     ```
 
     **Time** O(n). **Space** O(n), which can be reduced to O(1) with two variables, as in Climbing Stairs.
@@ -326,6 +392,58 @@ A staircase has `n` steps. Each move climbs 1 or 2 steps. Return the number of d
     |---|---|---|---|---|---|
     | nums[i] | 2 | 7 | 9 | 3 | 1 |
     | dp[i] | 2 | 7 | 11 | 11 | 12 |
+
+## In real projects
+
+The same ideas, in software you already use. The trainer opens the session with one of these; read the rest after class.
+
+| What you learn here | Where it runs in real software |
+|---|---|
+| Graph | A road map, a social network, the web (pages and links), and the list of packages that `pip install` must fetch first. |
+| BFS | Fewest hops: the shortest route on a metro map, or "2nd-degree connection" on LinkedIn. |
+| DFS | A web crawler following links. Finding everything that depends on a file before you delete it. |
+| Grid traversal | The paint-bucket tool in an image editor is Flood Fill. Counting separate regions in a scan is Number of Islands. |
+| Dynamic programming | Autocorrect measuring how far a typo is from a real word. A `diff` tool finding the fewest changes between two files. |
+
+### Example: degrees of connection
+
+BFS reaches people in order of distance, so the first time it meets someone is by the shortest chain of friends.
+
+```python
+from collections import deque
+
+network = {
+    "Asha": ["Ravi", "Meena"],
+    "Ravi": ["Asha", "Kiran"],
+    "Meena": ["Asha", "Kiran"],
+    "Kiran": ["Ravi", "Meena", "Zoya"],
+    "Zoya": ["Kiran"],
+}
+
+
+def degrees_from(start):
+    degree = {start: 0}
+    queue = deque([start])
+    while queue:
+        person = queue.popleft()
+        for friend in network[person]:
+            if friend not in degree:                 # first visit is the shortest chain
+                degree[friend] = degree[person] + 1
+                queue.append(friend)
+    return degree
+
+
+for person, degree in degrees_from("Asha").items():
+    print(person, degree)
+```
+
+``` { .text .output }
+Asha 0
+Ravi 1
+Meena 1
+Kiran 2
+Zoya 3
+```
 
 ## Common mistakes
 

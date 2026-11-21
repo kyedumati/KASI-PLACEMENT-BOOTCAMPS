@@ -87,6 +87,18 @@ def merge_sort(nums):
     merged.extend(left[i:])
     merged.extend(right[j:])
     return merged
+
+
+data = [5, 2, 4, 1, 9]
+print(bubble_sort(data[:]))       # data[:] is a copy, so data stays unsorted
+print(selection_sort(data[:]))
+print(merge_sort(data))
+```
+
+``` { .text .output }
+[1, 2, 4, 5, 9]
+[1, 2, 4, 5, 9]
+[1, 2, 4, 5, 9]
 ```
 
 ### Sorting in Python
@@ -106,6 +118,12 @@ print(by_name_length)       # ['fig', 'kiwi', 'banana']
 # Sort by marks descending, then name ascending
 ranked = sorted(students, key=lambda s: (-s[1], s[0]))
 print(ranked)
+```
+
+``` { .text .output }
+('Meena', 91)
+['fig', 'kiwi', 'banana']
+[('Meena', 91), ('Asha', 82), ('Ravi', 67)]
 ```
 
 `key` is a function that is called once on each element. The elements are ordered by what it returns.
@@ -152,7 +170,47 @@ def int_sqrt(n):
 print(int_sqrt(17))   # 4
 ```
 
+``` { .text .output }
+4
+```
+
 Clue words: "minimum speed", "smallest capacity", "least number of days such that...".
+
+## In real projects
+
+The same ideas, in software you already use. The trainer opens the session with one of these; read the rest after class.
+
+| What you learn here | Where it runs in real software |
+|---|---|
+| Sorting with a key | "Sort by price: low to high" on a shopping site. A leaderboard sorted by score. |
+| Merge step of merge sort | Combining two sorted lists into one: two bank statements, or log files from two servers, ordered by time. |
+| Binary search | A database index finds one row among a million in about 20 steps. Your phone's contact search does the same. |
+| Search for a boundary | `git bisect` finds the first commit that broke the build by testing the middle commit each time. |
+| Insert position | Keeping a leaderboard sorted as each new score arrives, without sorting it again. |
+
+### Example: find the first bad build
+
+Eight builds went out. Somewhere a bug came in, and every build after it is bad too. Testing a build takes ten minutes, so test as few as possible. This is what `git bisect` does.
+
+```python
+builds = ["ok", "ok", "ok", "ok", "bad", "bad", "bad", "bad"]    # build 0 to build 7
+
+low, high = 0, len(builds) - 1
+tested = 0
+while low < high:
+    mid = (low + high) // 2
+    tested += 1
+    if builds[mid] == "bad":
+        high = mid          # the first bad build is mid, or earlier
+    else:
+        low = mid + 1       # the first bad build is after mid
+
+print(f"First bad build: {low}. Builds tested: {tested} out of {len(builds)}.")
+```
+
+``` { .text .output }
+First bad build: 4. Builds tested: 3 out of 8.
+```
 
 ## Problems
 
@@ -177,6 +235,15 @@ Clue words: "minimum speed", "smallest capacity", "least number of days such tha
             else:
                 high = mid - 1
         return -1
+
+
+    print(binary_search([-1, 0, 3, 5, 9, 12], 9))   # found at index 4
+    print(binary_search([-1, 0, 3, 5, 9, 12], 2))   # not there
+    ```
+
+    ``` { .text .output }
+    4
+    -1
     ```
 
     **Time** O(log n). **Space** O(1).
@@ -205,6 +272,17 @@ Clue words: "minimum speed", "smallest capacity", "least number of days such tha
             else:
                 high = mid - 1
         return low
+
+
+    print(search_insert([1, 3, 5, 6], 5))   # found
+    print(search_insert([1, 3, 5, 6], 2))   # belongs between 1 and 3
+    print(search_insert([1, 3, 5, 6], 7))   # belongs at the end
+    ```
+
+    ``` { .text .output }
+    2
+    1
+    4
     ```
 
     **Time** O(log n). **Space** O(1).
@@ -240,6 +318,15 @@ Clue words: "minimum speed", "smallest capacity", "least number of days such tha
                 nums1[k] = nums2[j]
                 j -= 1
             k -= 1
+
+
+    nums1 = [1, 2, 3, 0, 0, 0]
+    merge(nums1, 3, [2, 5, 6], 3)
+    print(nums1)
+    ```
+
+    ``` { .text .output }
+    [1, 2, 2, 3, 5, 6]
     ```
 
     **Time** O(m + n). **Space** O(1).
