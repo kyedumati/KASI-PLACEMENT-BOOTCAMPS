@@ -618,3 +618,11 @@
   color: #c7d2ff;
   border-color: #2f3b5c;
 }
+
+/* Diagrams from tools/make_diagrams.py. No display rule here: Material hides
+   the light or dark copy with display:none and this must not override it. */
+.md-typeset img.ksr-diagram {
+  max-width: 100%;
+  height: auto;
+  margin: 0.4rem 0 0.8rem;
+}

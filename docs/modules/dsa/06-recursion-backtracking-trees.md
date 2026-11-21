@@ -50,16 +50,8 @@ print(factorial(4))   # 24
 
 **Trace the call stack on paper.** Each call waits for the one below it:
 
-```text
-factorial(4)
-  4 * factorial(3)
-        3 * factorial(2)
-              2 * factorial(1)
-                    returns 1
-              returns 2
-        returns 6
-  returns 24
-```
+![The call stack for factorial(4): four calls go down to the base case factorial(1), then the answers 1, 2, 6 and 24 come back up](../../assets/diagrams/call-stack-light.svg#only-light){ .ksr-diagram }
+![The call stack for factorial(4): four calls go down to the base case factorial(1), then the answers 1, 2, 6 and 24 come back up](../../assets/diagrams/call-stack-dark.svg#only-dark){ .ksr-diagram }
 
 Every waiting call uses memory on the call stack. So recursion that goes `n` levels deep uses O(n) space, even if you create no variables.
 
@@ -78,20 +70,15 @@ def backtrack(start, path):
 
 The decision tree for the subsets of `[1, 2, 3]`. Every node is one answer:
 
-```text
-[]
-├── [1]
-│   ├── [1, 2]
-│   │   └── [1, 2, 3]
-│   └── [1, 3]
-├── [2]
-│   └── [2, 3]
-└── [3]
-```
+![The decision tree for the subsets of [1, 2, 3]: eight boxes, one for each subset](../../assets/diagrams/subsets-tree-light.svg#only-light){ .ksr-diagram }
+![The decision tree for the subsets of [1, 2, 3]: eight boxes, one for each subset](../../assets/diagrams/subsets-tree-dark.svg#only-dark){ .ksr-diagram }
 
 ### Binary trees
 
 Each node has a value and up to two children, `left` and `right`. The top node is the root. A node with no children is a leaf.
+
+![A binary tree with root 4, children 2 and 6, and leaves 1, 3 and 7 on level 2](../../assets/diagrams/binary-tree-light.svg#only-light){ .ksr-diagram }
+![A binary tree with root 4, children 2 and 6, and leaves 1, 3 and 7 on level 2](../../assets/diagrams/binary-tree-dark.svg#only-dark){ .ksr-diagram }
 
 ```python
 class TreeNode:

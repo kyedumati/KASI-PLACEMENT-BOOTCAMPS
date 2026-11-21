@@ -33,6 +33,9 @@ You can store a graph as an adjacency list, traverse it with BFS and DFS, treat 
 
 A graph is a set of nodes joined by edges. A tree is a graph with no cycles and one root. Store a graph as a dictionary from each node to the list of its neighbours.
 
+![A graph with five nodes. A joins B and C, B joins D and E, and C joins E](../../assets/diagrams/graph-light.svg#only-light){ .ksr-diagram }
+![A graph with five nodes. A joins B and C, B joins D and E, and C joins E](../../assets/diagrams/graph-dark.svg#only-dark){ .ksr-diagram }
+
 ```python
 #   A --- B --- D
 #   |     |
@@ -124,12 +127,8 @@ for each (dr, dc) in (1, 0), (-1, 0), (0, 1), (0, -1):
 
 The grid holds `"1"` for land and `"0"` for water. An island is a group of land cells connected up, down, left or right. Return the number of islands.
 
-```text
-1 1 0 0 0
-1 1 0 0 0
-0 0 1 0 0
-0 0 0 1 1      -> 3
-```
+![A 4 by 5 grid with three islands: four cells top left, one cell in the middle, two cells bottom right](../../assets/diagrams/islands-grid-light.svg#only-light){ .ksr-diagram }
+![A 4 by 5 grid with three islands: four cells top left, one cell in the middle, two cells bottom right](../../assets/diagrams/islands-grid-dark.svg#only-dark){ .ksr-diagram }
 
 ??? question "Hint 1"
     Scan every cell. Each time you find land that you have not visited, you have found a new island.

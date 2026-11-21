@@ -132,6 +132,9 @@ print(ranked)
 
 On **sorted** data, look at the middle. If it is not the target, half of the data can be thrown away. A million elements need about 20 steps.
 
+![Binary search for 9 in [-1, 0, 3, 5, 9, 12]: the first middle is 3, so the left half is discarded; the second middle is 9](../../assets/diagrams/binary-search-light.svg#only-light){ .ksr-diagram }
+![Binary search for 9 in [-1, 0, 3, 5, 9, 12]: the first middle is 3, so the left half is discarded; the second middle is 9](../../assets/diagrams/binary-search-dark.svg#only-dark){ .ksr-diagram }
+
 ```text
 low, high = 0, len(nums) - 1
 while low <= high:

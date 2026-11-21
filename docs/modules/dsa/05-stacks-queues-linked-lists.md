@@ -25,6 +25,9 @@ You can use a stack and a queue in Python, build a linked list from a `Node` cla
 
 ## Concepts
 
+![A stack pushes and pops at the top. A queue adds at the back and removes from the front](../../assets/diagrams/stack-queue-light.svg#only-light){ .ksr-diagram }
+![A stack pushes and pops at the top. A queue adds at the back and removes from the front](../../assets/diagrams/stack-queue-dark.svg#only-dark){ .ksr-diagram }
+
 ### Stack: last in, first out
 
 Think of a pile of plates. You add and remove at the top. A Python list is a stack if you only use `append` and `pop`.
@@ -72,6 +75,9 @@ deque(['B', 'C'])
 ### Linked list
 
 A linked list is a chain of nodes. Each node holds a value and a reference to the next node. The last node points to `None`.
+
+![A linked list: head points to node 1, which points to node 2, then node 3, then None](../../assets/diagrams/linked-list-light.svg#only-light){ .ksr-diagram }
+![A linked list: head points to node 1, which points to node 2, then node 3, then None](../../assets/diagrams/linked-list-dark.svg#only-dark){ .ksr-diagram }
 
 ```python
 class ListNode:

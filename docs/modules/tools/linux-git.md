@@ -169,11 +169,12 @@ The folder holds `archive` and `notes.txt`, so the first count is 2. Both lines 
 
 ```text
 -rwxr-xr--  1 asha  staff  120 Nov 20 10:00 run.sh
- └┬┘└┬┘└┬┘
-  │  │  └── others: read
-  │  └───── group:  read, execute
-  └──────── owner:  read, write, execute
 ```
+
+Read the first ten characters in four groups:
+
+![The permission string -rwxr-xr-- split into file type, owner rwx = 7, group r-x = 5 and others r-- = 4, which is chmod 754](../../assets/diagrams/chmod-bits-light.svg#only-light){ .ksr-diagram }
+![The permission string -rwxr-xr-- split into file type, owner rwx = 7, group r-x = 5 and others r-- = 4, which is chmod 754](../../assets/diagrams/chmod-bits-dark.svg#only-dark){ .ksr-diagram }
 
 Each permission has a number: read is 4, write is 2 and execute is 1. Add them up for each of the three groups.
 
@@ -211,11 +212,10 @@ Git records snapshots of your project, called **commits**. You can return to any
 
 ### The three areas
 
-```text
-Working directory  --git add-->  Staging area  --git commit-->  Repository  --git push-->  GitHub
-(files you edit)                 (what goes in                  (history on                (history
-                                 the next commit)               your laptop)               online)
-```
+![Git areas: git add moves work from the working directory to the staging area, git commit to the local repository, git push to GitHub, and git pull brings changes back](../../assets/diagrams/git-areas-light.svg#only-light){ .ksr-diagram }
+![Git areas: git add moves work from the working directory to the staging area, git commit to the local repository, git push to GitHub, and git pull brings changes back](../../assets/diagrams/git-areas-dark.svg#only-dark){ .ksr-diagram }
+
+The first three are on your laptop. GitHub is the fourth place: a copy of your repository that other people can see.
 
 ### One-time setup
 
@@ -279,6 +279,9 @@ Run `git status` before and after every other command until the cycle is automat
 ### Branch and merge
 
 A branch lets you try something without touching the working version on `main`.
+
+![A branch named improve-readme leaves main, gets one commit, and is merged back into main](../../assets/diagrams/git-branch-merge-light.svg#only-light){ .ksr-diagram }
+![A branch named improve-readme leaves main, gets one commit, and is merged back into main](../../assets/diagrams/git-branch-merge-dark.svg#only-dark){ .ksr-diagram }
 
 ```text title="Syntax"
 git switch -c NEW-BRANCH

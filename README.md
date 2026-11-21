@@ -49,6 +49,14 @@ Then open `site/index.html`.
 
 Write a new module page only when the new bootcamp needs a session that does not exist yet.
 
+## Diagrams
+
+The diagrams on the session pages are SVG files in `docs/assets/diagrams/`, each in a light and a dark version. They are generated: edit `tools/make_diagrams.py` and run it, and do not edit the SVG files by hand.
+
+```bash
+.venv/bin/python tools/make_diagrams.py
+```
+
 ## Not in this repo
 
 Diagnostic tests, post-assessments and quiz answer keys stay out of this public site.
