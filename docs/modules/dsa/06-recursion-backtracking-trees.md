@@ -379,8 +379,8 @@ For the example tree above → `[[4], [2, 6], [1, 3, 7]]`
 ## Interview questions
 
 1. What are the two parts of every recursive function?
-2. What is a stack overflow, and what causes it in recursion?
-3. What is the difference between recursion and iteration? When would you choose each?
+2. What happens when a recursive function has no base case, or never reaches it?
+3. Why does recursion that goes `n` levels deep use O(n) space, even with no extra variables?
 4. Name the three depth-first traversals. Which one gives sorted output on a BST?
 5. What is the difference between a binary tree and a binary search tree?
 6. What is the time complexity of search in a BST? What is the worst case?

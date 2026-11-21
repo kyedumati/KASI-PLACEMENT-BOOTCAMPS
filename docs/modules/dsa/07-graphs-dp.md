@@ -459,12 +459,12 @@ Zoya 3
 ## Interview questions
 
 1. What is the difference between BFS and DFS? When would you use each?
-2. What is the difference between an adjacency list and an adjacency matrix? When is each better?
+2. What is an adjacency list? How do you store one in Python?
 3. What is the time complexity of BFS and DFS?
 4. What is the difference between a tree and a graph?
-5. What is dynamic programming? What two properties must a problem have?
+5. What is dynamic programming? Why is plain recursive Fibonacci slow, and what fixes it?
 6. What is the difference between memoisation and tabulation?
-7. How is DP different from a greedy approach? How is it different from divide and conquer?
+7. Why can a grid be treated as a graph? What are the neighbours of a cell?
 
 ## Commit
 

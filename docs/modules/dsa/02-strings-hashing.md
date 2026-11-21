@@ -305,11 +305,11 @@ Return the index of the first character that appears only once, or `-1` if there
 
 ## Interview questions
 
-1. How does a hash map work? What is a collision, and how is it handled?
-2. What is the worst-case lookup time in a hash map, and when does it happen?
+1. Why is a lookup in a dictionary or a set O(1) on average, when a lookup in a list is O(n)?
+2. Name the three hashing templates, and one problem each one solves.
 3. What is the difference between a set and a dictionary?
 4. Why are strings immutable in Python? Name one benefit.
-5. Follow-up to Two Sum: what if the array is already sorted? (This leads into the next session.)
+5. In Two Sum, why does the dictionary store value to index, and why do you check before you store?
 
 ## Commit
 

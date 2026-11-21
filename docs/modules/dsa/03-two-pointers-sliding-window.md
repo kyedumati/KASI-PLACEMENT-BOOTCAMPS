@@ -270,11 +270,11 @@ Return the length of the longest substring in which no character repeats.
 
 ## Interview questions
 
-1. When can two pointers replace a hash map? What do you gain?
+1. Describe the three pointer shapes, and one use of each.
 2. Why is the variable sliding window O(n) when it has a nested `while`?
-3. What is the difference between a substring, a subarray and a subsequence?
-4. How would you find the middle node of a linked list in one pass?
-5. Follow-up to Longest Substring: how would you return the substring itself, not only its length?
+3. What is the difference between a fixed window and a variable window? Name one problem for each.
+4. In Move Zeroes, what does `slow` mean and what does `fast` mean?
+5. Valid Palindrome can also be solved by building a cleaned string and reversing it. What does the two-pointer version save?
 
 ## Commit
 

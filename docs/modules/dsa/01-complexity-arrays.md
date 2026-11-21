@@ -289,7 +289,7 @@ Return the largest sum of any contiguous, non-empty part of `nums`.
 2. What is the complexity of `x in nums` when `nums` is a list? When it is a set?
 3. Why do we drop constants in Big-O?
 4. Explain Kadane's algorithm in two sentences.
-5. Follow-up to Maximum Subarray: how would you also return the start and end indexes?
+5. What is a prefix sum? When is it worth building one?
 
 ## Commit
 

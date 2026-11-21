@@ -421,8 +421,8 @@ The starter code has seven `TODO` markers. Do them in order.
 1. Explain the four pillars of OOP, each with a one-line example.
 2. What is the difference between a class and an object?
 3. What is `self`? What is `__init__`?
-4. What is the difference between method overriding and method overloading? Which one does Python support directly?
-5. What is the difference between `try`/`except`/`else`/`finally`?
+4. In the `Shape` example, what does `super().__init__(...)` do? Why can `Shape` itself not be created?
+5. What goes in `try` and what goes in `except`? Why name the error, such as `except ValueError`, and not use a bare `except`?
 6. Why is `with open(...)` preferred over calling `open()` and `close()` yourself?
 
 ## Commit

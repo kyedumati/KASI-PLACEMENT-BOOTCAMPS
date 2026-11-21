@@ -601,13 +601,13 @@ Open `https://github.com/YOUR-USERNAME/placement-training-2026` in a browser. Yo
 
 1. What is the difference between Git and GitHub?
 2. What is the difference between `git add` and `git commit`? What is the staging area for?
-3. What is the difference between `git pull` and `git fetch`?
-4. What is a merge conflict? How do you resolve one?
-5. What is the difference between `git merge` and `git rebase`?
+3. What does `git status` tell you? What does `git push` do?
+4. What is a branch? What does `git merge` do?
+5. What is the difference between `>` and `>>`?
 6. What does `chmod 755` mean?
-7. What is the difference between an absolute path and a relative path?
+7. What do `.`, `..` and `~` mean in a path?
 8. How would you find every line containing "error" in a log file, and count them?
-9. What is a `.gitignore` file? Name two things that belong in it.
+9. What does a pipe do? Give one example.
 
 ## Commit
 

@@ -308,10 +308,10 @@ Given the heads of two sorted linked lists, join them into one sorted list and r
 
 1. What is the difference between a stack and a queue? Give a real use of each.
 2. Where does the operating system or a programming language use a stack?
-3. Compare an array and a linked list for access, insertion and deletion.
+3. What does each node of a singly linked list hold? What does the last node point to?
 4. Why is `collections.deque` preferred over a list for a queue?
-5. How would you detect a cycle in a linked list?
-6. Follow-up: reverse a linked list recursively.
+5. In Reverse Linked List, why must you save `current.next` before you change it?
+6. Why does Merge Two Sorted Lists start with a dummy node?
 
 ## Commit
 

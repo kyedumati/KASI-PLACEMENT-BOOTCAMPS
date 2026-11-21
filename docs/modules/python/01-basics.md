@@ -387,7 +387,7 @@ Print the numbers 1 to 20. For multiples of 3 print `Fizz`, for multiples of 5 p
 ## Interview questions
 
 1. What is the difference between `/` and `//`?
-2. Is Python compiled or interpreted? Is it statically or dynamically typed?
+2. What type does `input()` return? What must you do before using it in arithmetic?
 3. What does `range(10, 0, -2)` produce?
 4. What is the difference between `break` and `continue`?
 5. Why is checking divisors up to √n enough for a prime test?

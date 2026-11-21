@@ -350,7 +350,7 @@ First bad build: 4. Builds tested: 3 out of 8.
 
 1. Compare bubble sort, selection sort and merge sort on time, space and stability.
 2. What does "stable sort" mean? Give a case where it matters.
-3. Which algorithm does Python's `sort()` use, and what is its complexity?
+3. What is the difference between `sorted(x)` and `x.sort()`? What is their time complexity?
 4. Why is binary search O(log n)?
 5. What must be true of the data before you can binary search it?
 6. What is "binary search on the answer"? Give one example.

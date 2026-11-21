@@ -374,7 +374,7 @@ Given a sentence, print each word and how many times it appears. Ignore case.
 2. Why is `x in my_set` faster than `x in my_list`?
 3. Can a list be a dictionary key? Why not?
 4. What is the difference between `sort()` and `sorted()`?
-5. What is the difference between a shallow copy and a deep copy?
+5. What happens when you write `b = a` for a list and then change `b`? How do you make a separate copy?
 
 ## Commit
 
