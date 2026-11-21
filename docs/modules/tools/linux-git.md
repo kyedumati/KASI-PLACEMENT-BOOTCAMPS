@@ -240,7 +240,42 @@ $ git config --global user.email
 asha@example.com
 ```
 
+### Starting a repository
+
+Every Git command except these two must be run inside a repository. There are two ways to get one.
+
+```text title="Syntax"
+git init
+git clone URL
+```
+
+| You have | Use | What it does |
+|---|---|---|
+| A folder of your own files, not on GitHub yet | `git init` | Turns the current folder into a repository. Nothing is uploaded. |
+| A repository that already exists on GitHub | `git clone URL` | Downloads it into a new folder, already connected to GitHub. |
+
+Today you use `git init`, because your Day 1 programs are already on your laptop and no repository exists for them yet. You connect the folder to GitHub in Step 5 of the lab. You will use `git clone` when you join a project that someone else started, or when you work on a second computer.
+
+```bash
+git clone https://github.com/kyedumati/KASI-PLACEMENT-BOOTCAMPS.git
+```
+
+``` { .text .output }
+$ git clone https://github.com/kyedumati/KASI-PLACEMENT-BOOTCAMPS.git
+Cloning into 'KASI-PLACEMENT-BOOTCAMPS'...
+$ cd KASI-PLACEMENT-BOOTCAMPS
+```
+
+Run a Git command in a folder that is not a repository and you get this error. It means "you are in the wrong folder", or "you have not run `git init` yet".
+
+``` { .text .output }
+$ git status
+fatal: not a git repository (or any of the parent directories): .git
+```
+
 ### The daily cycle
+
+Once a repository exists, this is the loop you repeat for the rest of the week. You will create your repository in the lab below, so read this now and type it there. `git push` works only after Step 5, when the folder is connected to GitHub.
 
 ```text title="Syntax"
 git add FILE-OR-FOLDER
