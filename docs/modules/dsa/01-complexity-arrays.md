@@ -37,6 +37,8 @@ Big-O says how the work grows as the input size `n` grows. Drop constants and ke
 | A loop inside a loop, both over the input | O(n²) | Quadratic |
 | Every subset of the input | O(2ⁿ) | Exponential |
 
+Here is one function to work through. It answers: do any two numbers in the list add up to the target?
+
 ```python
 def has_pair_with_sum_slow(nums, target):
     n = len(nums)
@@ -55,6 +57,51 @@ print(has_pair_with_sum_slow([2, 7, 11, 15], 100))
 True
 False
 ```
+
+**Its complexity is O(n²) time and O(1) space.** Here is how to work that out.
+
+**Time: count how many times the innermost line runs in the worst case.** The worst case is when no pair matches, so the function never returns early. The innermost line is the `if`. Take a list of 4 numbers:
+
+| `i` | Values of `j` | Times the `if` runs |
+|---|---|---|
+| 0 | 1, 2, 3 | 3 |
+| 1 | 2, 3 | 2 |
+| 2 | 3 | 1 |
+| 3 | none | 0 |
+| | **Total** | **6** |
+
+For a list of `n` numbers the total is (n − 1) + (n − 2) + … + 1, which is n(n − 1) / 2, or n²/2 − n/2. Now apply the two rules from the top of this section:
+
+1. Keep the fastest-growing term: n²/2.
+2. Drop the constant: n².
+
+So the time is **O(n²)**. You can check the formula by counting:
+
+```python
+def count_checks(n):
+    checks = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            checks += 1                # stands in for the if
+    return checks
+
+
+for n in [4, 10, 100, 1000]:
+    print(n, count_checks(n))
+```
+
+``` { .text .output }
+4 6
+10 45
+100 4950
+1000 499500
+```
+
+Read the last two lines of the output. The input grew 10 times, from 100 to 1000, and the work grew about 100 times. That is what "quadratic" means, and it is why this function is too slow for large inputs.
+
+**Space: count the extra memory the function creates.** It creates three variables, `n`, `i` and `j`, whether the list has 4 numbers or 4 million. The amount does not grow with the input, so the space is **O(1)**. The list itself is the input and is not counted.
+
+In an interview you do not write the table. You say: "Two nested loops over the input, so O(n²) time. No extra structure, so O(1) space."
 
 Rules of thumb:
 
